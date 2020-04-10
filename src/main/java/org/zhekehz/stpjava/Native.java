@@ -1,3 +1,5 @@
+package org.zhekehz.stpjava;
+
 public final class Native {
 
     static native long createValidityChecker();

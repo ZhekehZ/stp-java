@@ -1,39 +1,47 @@
 #!/bin/bash
 
+build_dir=
+sources=
+resources=
+csources=
+
 function prepare {
-	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+	JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+	build_dir="$(pwd)/build/"
+  mkdir -p "$build_dir"
+
+  sources="$(pwd)/src/main/java/org/zhekehz/stpjava/"
+  resources="$(pwd)/src/main/resources/"
+  csources="$(pwd)/src/main/c/"
+}
+
+function generate_headers {
+  javac -d "$build_dir" "$sources/Native.java"
+  cd "$build_dir"
+  javah -o stp_Native.h org.zhekehz.stpjava.Native
+  mv stp_Native.h "$csources"
+  cd -
 }
 
 function make_c {
-	cd src/main/c/ || exit 1
-	LD_LIBRARY_PATH=../resources/
 	gcc -c -Wall -Werror -fPIC -I"$JAVA_HOME/include" -I"$JAVA_HOME/include/linux"\
-		-o stp_Native.o stp_Native.c 
-	gcc -shared stp_Native.o -o libstpnative.so -Wl,--no-as-needed -lstp
-	cp libstpnative.so ../resources/
-	cd ../../../
+		-o "$build_dir/stp_Native.o" "$csources/stp_Native.c"
+	gcc -shared "$build_dir/stp_Native.o" -o "$build_dir/libstpnative.so" -Wl,--no-as-needed -lstp
+	mv "$build_dir/libstpnative.so" "$resources/"
 }
 
-function make_java {
-	cd src/main/java/ || exit 1
-	javac Main.java
-	cd ../../../
+function clean {
+	rm -rf "$build_dir"
 }
 
-function run {
-	cd src/main/java || exit 1
-	printf 'RUNNING...\n\n'
-	java -cp . -Djava.library.path=../resources/ Main
-	cd ../../../
-}
+# set -x
 
-set -x
-
+printf ">> BUILDING C SHARED LIBRARY... "
 prepare
+generate_headers
 make_c
-make_java
-run
-
+clean
+printf ">> DONE."
 
 
 
