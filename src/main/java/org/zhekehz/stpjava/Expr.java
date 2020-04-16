@@ -5,10 +5,12 @@ public abstract class Expr {
     protected final ValidityChecker vc;
     protected final long exprRef;
 
-    public Expr(ValidityChecker vc, long exprRef) {
+    protected Expr(ValidityChecker vc, long exprRef) {
         this.exprRef = exprRef;
         this.vc = vc;
     }
+
+    public abstract Expr fromRef(long ref);
 
     public final QueryResult query() {
         return QueryResult.fromInt(Native.vc_query(vc.getRef(), exprRef));
@@ -18,6 +20,14 @@ public abstract class Expr {
         if (vc != other.vc) {
             throw new IllegalArgumentException();
         }
+    }
+
+    public Expr simplify() {
+        return this.fromRef(Native.vc_simplify(vc.getRef(), exprRef));
+    }
+
+    public void print() {
+        Native.vc_printExpr(vc.getRef(), exprRef);
     }
 
     @Override

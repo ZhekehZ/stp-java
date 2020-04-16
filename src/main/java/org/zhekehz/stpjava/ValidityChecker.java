@@ -17,11 +17,11 @@ public class ValidityChecker {
         ref = Native.createValidityChecker();
     }
 
-    void printCounterExample() {
+    public void printCounterExample() {
         Native.vc_printCounterExample(ref);
     }
 
-    void destroy() {
+    public void destroy() {
         Native.vc_Destroy(ref);
     }
 

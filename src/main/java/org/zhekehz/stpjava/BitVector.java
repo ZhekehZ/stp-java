@@ -9,7 +9,7 @@ public class BitVector extends Expr {
         this.width = width;
     }
 
-    private BitVector(ValidityChecker vc, int width, long ref) {
+    public BitVector(ValidityChecker vc, int width, long ref) {
         super(vc, ref);
         this.width = width;
     }
@@ -33,6 +33,11 @@ public class BitVector extends Expr {
         if (other.width != width) {
             throw new IllegalArgumentException();
         }
+    }
+
+    @Override
+    public BitVector fromRef(long ref) {
+        return new BitVector(vc, width, ref);
     }
 
     @Override

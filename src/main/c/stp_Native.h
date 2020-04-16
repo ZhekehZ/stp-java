@@ -87,6 +87,94 @@ JNIEXPORT void JNICALL Java_org_zhekehz_stpjava_Native_vc_1printCounterExample
 JNIEXPORT void JNICALL Java_org_zhekehz_stpjava_Native_vc_1Destroy
   (JNIEnv *, jclass, jlong);
 
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_trueExpr
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1trueExpr
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_falseExpr
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1falseExpr
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_andExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1andExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_orExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1orExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_xorExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1xorExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_impliesExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1impliesExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_iffExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1iffExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_iteExpr
+ * Signature: (JJJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1iteExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_assertFormula
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_org_zhekehz_stpjava_Native_vc_1assertFormula
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_simplify
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1simplify
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_printExpr
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_org_zhekehz_stpjava_Native_vc_1printExpr
+  (JNIEnv *, jclass, jlong, jlong);
+
 #ifdef __cplusplus
 }
 #endif

@@ -22,4 +22,25 @@ public final class Native {
 
     static native void vc_Destroy(long vc);
 
+
+    // TODO
+    static native long vc_trueExpr(long vc);
+    static native long vc_falseExpr(long vc);
+    static native long vc_andExpr(long vc, long left, long right);
+    static native long vc_orExpr(long vc, long left, long right);
+    static native long vc_xorExpr(long vc, long left, long right);
+    static native long vc_impliesExpr(long vc, long hyp, long conc);
+    static native long vc_iffExpr(long vc, long left, long right);
+    static native long vc_iteExpr(long vc, long conditional, long thenExpr, long elseExpr);
+//    static native long vc_boolToBVExpr(long vc, long form);
+
+
+//    static native long vc_orExprN(long vc, long* children, int numOfChildNodes);
+//    static native long vc_andExprN(long vc, Expr* children, int numOfChildNodes);
+
+    static native void vc_assertFormula(long vc, long e);
+    static native long vc_simplify(long vc, long e);
+
+    static native void vc_printExpr(long vc, long e);
+
 }
