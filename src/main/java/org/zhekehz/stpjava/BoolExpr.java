@@ -2,6 +2,10 @@ package org.zhekehz.stpjava;
 
 public class BoolExpr extends Expr {
 
+    public BoolExpr(ValidityChecker vc, String name) {
+        super(vc, Native.vc_boolType(vc.getRef()));
+    }
+
     public BoolExpr(ValidityChecker vc, long ref) {
         super(vc, ref);
     }
@@ -12,6 +16,28 @@ public class BoolExpr extends Expr {
 
     public static BoolExpr getFalse(ValidityChecker vc) {
         return new BoolExpr(vc, Native.vc_falseExpr(vc.getRef()));
+    }
+
+    public static BoolExpr andAll(ValidityChecker vc, BoolExpr[] children) {
+        if (children.length == 0) {
+            throw new IllegalArgumentException("Empty array");
+        }
+        long[] refs = new long[children.length];
+        for (int i = 0; i < children.length; i++) {
+            refs[i] = children[i].exprRef;
+        }
+        return new BoolExpr(vc, Native.vc_andExprN(vc.getRef(), refs, children.length));
+    }
+
+    public static BoolExpr orAll(ValidityChecker vc, BoolExpr[] children) {
+        if (children.length == 0) {
+            throw new IllegalArgumentException("Empty array");
+        }
+        long[] refs = new long[children.length];
+        for (int i = 0; i < children.length; i++) {
+            refs[i] = children[i].exprRef;
+        }
+        return new BoolExpr(vc, Native.vc_orExprN(vc.getRef(), refs, children.length));
     }
 
     public BoolExpr not() {
@@ -43,34 +69,12 @@ public class BoolExpr extends Expr {
         return (T) thenE.fromRef(Native.vc_iteExpr(vc.getRef(), exprRef, thenE.exprRef, elseE.exprRef));
     }
 
-    public static BoolExpr andAll(ValidityChecker vc, BoolExpr[] children) {
-        if (children.length == 0) {
-            throw new IllegalArgumentException("Empty array");
-        }
-        long[] refs = new long[children.length];
-        for (int i = 0; i < children.length; i++) {
-            refs[i] = children[i].exprRef;
-        }
-        return new BoolExpr(vc, Native.vc_andExprN(vc.getRef(), refs, children.length));
-    }
-
-    public static BoolExpr orAll(ValidityChecker vc, BoolExpr[] children) {
-        if (children.length == 0) {
-            throw new IllegalArgumentException("Empty array");
-        }
-        long[] refs = new long[children.length];
-        for (int i = 0; i < children.length; i++) {
-            refs[i] = children[i].exprRef;
-        }
-        return new BoolExpr(vc, Native.vc_orExprN(vc.getRef(), refs, children.length));
-    }
-
     public void assertFormula() {
         Native.vc_assertFormula(vc.getRef(), exprRef);
     }
 
-    public BitVector toBitVector() {
-        return new BitVector(vc, 1, Native.vc_boolToBVExpr(vc.getRef(), exprRef));
+    public BitVectorExpr toBitVector() {
+        return new BitVectorExpr(vc, 1, Native.vc_boolToBVExpr(vc.getRef(), exprRef));
     }
 
     @Override
@@ -81,6 +85,11 @@ public class BoolExpr extends Expr {
     @Override
     public int hashCode() {
         return super.hashCode() * 23 + 7;
+    }
+
+    @Override
+    public ExprType getType() {
+        return new BoolType();
     }
 
     @Override

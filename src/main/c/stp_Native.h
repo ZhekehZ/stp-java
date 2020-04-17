@@ -41,6 +41,14 @@ JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1eqExpr
 
 /*
  * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_boolType
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1boolType
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
  * Method:    vc_trueExpr
  * Signature: (J)J
  */
@@ -134,6 +142,14 @@ JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1andExprN
  */
 JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1orExprN
   (JNIEnv *, jclass, jlong, jlongArray, jint);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_arrayType
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1arrayType
+  (JNIEnv *, jclass, jlong, jlong, jlong);
 
 /*
  * Class:     org_zhekehz_stpjava_Native

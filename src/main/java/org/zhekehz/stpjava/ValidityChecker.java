@@ -2,12 +2,12 @@ package org.zhekehz.stpjava;
 
 public class ValidityChecker {
 
-    private final long ref;
-
     static {
         System.loadLibrary("stpnative");
         System.loadLibrary("stp");
     }
+
+    private final long ref;
 
     public ValidityChecker() {
         ref = Native.vc_createValidityChecker();

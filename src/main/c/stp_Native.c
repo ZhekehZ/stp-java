@@ -62,6 +62,8 @@ NEW_FUN_3(vc_1eqExpr, vc_eqExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
 
 // BOOLEAN EXPRESSIONS
 
+NEW_FUN_1(vc_1boolType, vc_boolType, jlong, VC, jlong)
+
 NEW_FUN_1(vc_1trueExpr, vc_trueExpr, jlong, VC, jlong)
 
 NEW_FUN_1(vc_1falseExpr, vc_falseExpr, jlong, VC, jlong)
@@ -103,11 +105,12 @@ JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1orExprN
 // \ BOOLEAN EXPRESSIONS
 
 
-    /* TODO:
-     *  ARRAY EXPRESSIONS
-     *  * implement methods
-     *  \ ARRAY EXPRESSIONS
-     */
+// ARRAY EXPRESSIONS
+
+NEW_FUN_3(vc_1arrayType, vc_arrayType, jlong, VC, jlong, Type, jlong, Type, jlong)
+
+// \ ARRAY EXPRESSIONS
+
 
 NEW_FUN_2(vc_1printExpr, vc_printExpr, jlong, VC, jlong, Expr, void)
 

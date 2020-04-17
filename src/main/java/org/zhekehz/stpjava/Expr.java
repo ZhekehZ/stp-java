@@ -34,6 +34,8 @@ public abstract class Expr {
         }
     }
 
+    public abstract ExprType getType();
+
     @Override
     public int hashCode() {
         return Long.hashCode(exprRef) * 13 + vc.hashCode();

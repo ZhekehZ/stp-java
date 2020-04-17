@@ -6,9 +6,6 @@ public final class Native {
 
     static native long vc_createValidityChecker();
 
-//        DLL_PUBLIC Type vc_boolType(VC vc);
-//        DLL_PUBLIC Type vc_arrayType(VC vc, Type typeIndex, Type typeData);
-
     // \ ANY
 
 
@@ -24,6 +21,8 @@ public final class Native {
 
 
     // BOOLEAN EXPRESSIONS
+
+    static native long vc_boolType(long vc);
 
     static native long vc_trueExpr(long vc);
 
@@ -52,16 +51,16 @@ public final class Native {
     // \ BOOLEAN EXPRESSIONS
 
 
-    /* TODO:
-     *  ARRAY EXPRESSIONS
-     *  * implement methods
-     *  \ ARRAY EXPRESSIONS
-     */
+    // ARRAY EXPRESSIONS
+
+    static native long vc_arrayType(long vc, long typeIndex, long typeData);
+    // TODO: implement methods
 
     static native void vc_printExpr(long vc, long e);
 
     static native void vc_printCounterExample(long vc);
 
+    // \ ARRAY EXPRESSIONS
 
 
     // CONTEXT RELATED METHODS
