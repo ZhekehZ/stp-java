@@ -56,17 +56,33 @@ public class BoolExpr extends Expr {
         return new BoolExpr(vc, Native.vc_iffExpr(vc.getRef(), exprRef, other.exprRef));
     }
 
-    @SuppressWarnings({"unchecked"})
-    public <T extends Expr> T ifThenElse(T lhs, T rhs) {
-        return (T) lhs.fromRef(Native.vc_iffExpr(vc.getRef(), lhs.exprRef, rhs.exprRef));
+    public static BoolExpr andAll(ValidityChecker vc, BoolExpr[] children) {
+        long[] refs = new long[children.length];
+        for (int i = 0; i < children.length; i++) {
+            refs[i] = children[i].exprRef;
+        }
+        return new BoolExpr(vc, Native.vc_andExprN(vc.getRef(), refs, children.length));
     }
 
-    public void assertTrue() {
+    public static BoolExpr orAll(ValidityChecker vc, BoolExpr[] children) {
+        long[] refs = new long[children.length];
+        for (int i = 0; i < children.length; i++) {
+            refs[i] = children[i].exprRef;
+        }
+        return new BoolExpr(vc, Native.vc_orExprN(vc.getRef(), refs, children.length));
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public <T extends Expr> T ifThenElse(T thenE, T elseE) {
+        return (T) thenE.fromRef(Native.vc_iteExpr(vc.getRef(), exprRef, thenE.exprRef, elseE.exprRef));
+    }
+
+    public void assertFormula() {
         Native.vc_assertFormula(vc.getRef(), exprRef);
     }
 
-//    public BitVector toBitVector() {
-//        return new BitVector(vc, Native.vc_boolToBVExpr(vc.getRef(), exprRef));
-//    }
+    public BitVector toBitVector() {
+        return new BitVector(vc, 1, Native.vc_boolToBVExpr(vc.getRef(), exprRef));
+    }
 
 }

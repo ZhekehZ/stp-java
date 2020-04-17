@@ -93,16 +93,82 @@ JNIEXPORT ret JNICALL Java_org_zhekehz_stpjava_Native_##name                    
     return (ret) cname((type1_to) a1, (type2_to) a2, (type3_to) a3, (type4_to) a4);          \
 }
 
+
 CREATE_FUNCTION_1(vc_1trueExpr, vc_trueExpr, jlong, VC, jlong)
 CREATE_FUNCTION_1(vc_1falseExpr, vc_falseExpr, jlong, VC, jlong)
-//CREATE_FUNCTION_2(vc_1boolToBVExpr, vc_boolToBVExpr, jlong, VC, jlong, Expr, jlong)
+CREATE_FUNCTION_2(vc_1boolToBVExpr, vc_boolToBVExpr, jlong, VC, jlong, Expr, jlong)
 CREATE_FUNCTION_3(vc_1andExpr, vc_andExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
 CREATE_FUNCTION_3(vc_1orExpr, vc_orExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
 CREATE_FUNCTION_3(vc_1xorExpr, vc_xorExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
 CREATE_FUNCTION_3(vc_1impliesExpr, vc_impliesExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
 CREATE_FUNCTION_3(vc_1iffExpr, vc_iffExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
-//CREATE_FUNCTION_4(vc_1iteExpr, vc_iteExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_4(vc_1iteExpr, vc_iteExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong, Expr, jlong)
 
 CREATE_FUNCTION_2(vc_1assertFormula, vc_assertFormula, jlong, VC, jlong, Expr, void)
 CREATE_FUNCTION_2(vc_1simplify, vc_simplify, jlong, VC, jlong, Expr, jlong)
 CREATE_FUNCTION_2(vc_1printExpr, vc_printExpr, jlong, VC, jlong, Expr, void)
+
+
+CREATE_FUNCTION_1(vc_1push, vc_push, jlong, VC, void)
+CREATE_FUNCTION_1(vc_1pop, vc_pop, jlong, VC, void)
+
+CREATE_FUNCTION_1(getBVInt, getBVInt, jlong, Expr, jint)
+
+CREATE_FUNCTION_1(getBVUnsignedLong, getBVUnsignedLongLong, jlong, Expr, jlong)
+
+
+JNIEXPORT jboolean JNICALL Java_org_zhekehz_stpjava_Native_isConst
+  (JNIEnv * env, jclass cls, jlong expr) {
+    enum exprkind_t type = getExprKind((Expr) expr);
+    return (jboolean) (type == BVCONST || type == FALSE || type == TRUE);
+}
+
+CREATE_FUNCTION_4(vc_1bvMinusExpr, vc_bvMinusExpr, jlong, VC, jint, int, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_4(vc_1bvMultExpr, vc_bvMultExpr, jlong, VC, jint, int, jlong, Expr, jlong, Expr, jlong)
+
+CREATE_FUNCTION_4(vc_1bvDivExpr, vc_bvDivExpr, jlong, VC, jint, int, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_4(vc_1bvModExpr, vc_bvModExpr, jlong, VC, jint, int, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_4(vc_1sbvDivExpr, vc_sbvDivExpr, jlong, VC, jint, int, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_4(vc_1sbvModExpr, vc_sbvModExpr, jlong, VC, jint, int, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_4(vc_1sbvRemExpr, vc_sbvRemExpr, jlong, VC, jint, int, jlong, Expr, jlong, Expr, jlong)
+
+
+CREATE_FUNCTION_3(vc_1bvLtExpr, vc_bvLtExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_3(vc_1bvLeExpr, vc_bvLeExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_3(vc_1bvGtExpr, vc_bvGtExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_3(vc_1bvGeExpr, vc_bvGeExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_3(vc_1sbvLtExpr, vc_sbvLtExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_3(vc_1sbvLeExpr, vc_sbvLeExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_3(vc_1sbvGtExpr, vc_sbvGtExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_3(vc_1sbvGeExpr, vc_sbvGeExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
+
+CREATE_FUNCTION_2(vc_1bvUMinusExpr, vc_bvUMinusExpr, jlong, VC, jlong, Expr, jlong)
+CREATE_FUNCTION_3(vc_1bvAndExpr, vc_bvAndExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_3(vc_1bvOrExpr, vc_bvOrExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_3(vc_1bvXorExpr, vc_bvXorExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_2(vc_1bvNotExpr, vc_bvNotExpr, jlong, VC, jlong, Expr, jlong)
+
+
+CREATE_FUNCTION_2(vc_1getBVLength, vc_getBVLength, jlong, VC, jlong, Expr, jint)
+
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1orExprN
+  (JNIEnv * env, jclass cls, jlong vc, jlongArray exprs, jint size) {
+      jboolean iscopy;
+      jlong* children = (*env)->GetLongArrayElements(env, exprs, &iscopy);
+      Expr* res = vc_orExprN((VC) vc, (Expr*) children, (int) size);
+      if (iscopy == JNI_TRUE) (*env)->ReleaseLongArrayElements(env, exprs, children, JNI_ABORT);
+      return (jlong) res;
+}
+
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1andExprN
+  (JNIEnv * env, jclass cls, jlong vc, jlongArray exprs, jint size) {
+      jboolean iscopy;
+      jlong* children = (*env)->GetLongArrayElements(env, exprs, &iscopy);
+      Expr* res = vc_andExprN((VC) vc, (Expr*) children, (int) size);
+      if (iscopy == JNI_TRUE) (*env)->ReleaseLongArrayElements(env, exprs, children, JNI_ABORT);
+      return (jlong) res;
+}
+
+CREATE_FUNCTION_4(vc_1bvLeftShiftExprExpr, vc_bvLeftShiftExprExpr, jlong, VC, jint, int, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_4(vc_1bvRightShiftExprExpr, vc_bvSignedRightShiftExprExpr, jlong, VC, jint, int, jlong, Expr, jlong, Expr, jlong)
+CREATE_FUNCTION_4(vc_1bvSignedRightShiftExprExpr, vc_bvSignedRightShiftExprExpr, jlong, VC, jint, int, jlong, Expr, jlong, Expr, jlong)

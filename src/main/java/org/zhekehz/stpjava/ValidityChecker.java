@@ -25,6 +25,14 @@ public class ValidityChecker {
         Native.vc_Destroy(ref);
     }
 
+    public void push() {
+        Native.vc_push(ref);
+    }
+
+    public void pop() {
+        Native.vc_pop(ref);
+    }
+
     @Override
     public int hashCode() {
         return Long.hashCode(ref);

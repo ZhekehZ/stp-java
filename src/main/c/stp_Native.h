@@ -153,6 +153,30 @@ JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1iteExpr
 
 /*
  * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_boolToBVExpr
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1boolToBVExpr
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_orExprN
+ * Signature: (J[JI)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1orExprN
+  (JNIEnv *, jclass, jlong, jlongArray, jint);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_andExprN
+ * Signature: (J[JI)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1andExprN
+  (JNIEnv *, jclass, jlong, jlongArray, jint);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
  * Method:    vc_assertFormula
  * Signature: (JJ)V
  */
@@ -174,6 +198,238 @@ JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1simplify
  */
 JNIEXPORT void JNICALL Java_org_zhekehz_stpjava_Native_vc_1printExpr
   (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_push
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_org_zhekehz_stpjava_Native_vc_1push
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_pop
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_org_zhekehz_stpjava_Native_vc_1pop
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    getBVInt
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_org_zhekehz_stpjava_Native_getBVInt
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    getBVUnsignedLong
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_getBVUnsignedLong
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    isConst
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_org_zhekehz_stpjava_Native_isConst
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_getBVLength
+ * Signature: (JJ)I
+ */
+JNIEXPORT jint JNICALL Java_org_zhekehz_stpjava_Native_vc_1getBVLength
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvMinusExpr
+ * Signature: (JIJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvMinusExpr
+  (JNIEnv *, jclass, jlong, jint, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvMultExpr
+ * Signature: (JIJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvMultExpr
+  (JNIEnv *, jclass, jlong, jint, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvDivExpr
+ * Signature: (JIJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvDivExpr
+  (JNIEnv *, jclass, jlong, jint, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvModExpr
+ * Signature: (JIJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvModExpr
+  (JNIEnv *, jclass, jlong, jint, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_sbvDivExpr
+ * Signature: (JIJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1sbvDivExpr
+  (JNIEnv *, jclass, jlong, jint, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_sbvModExpr
+ * Signature: (JIJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1sbvModExpr
+  (JNIEnv *, jclass, jlong, jint, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_sbvRemExpr
+ * Signature: (JIJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1sbvRemExpr
+  (JNIEnv *, jclass, jlong, jint, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvLtExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvLtExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvLeExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvLeExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvGtExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvGtExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvGeExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvGeExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_sbvLtExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1sbvLtExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_sbvLeExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1sbvLeExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_sbvGtExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1sbvGtExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_sbvGeExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1sbvGeExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvUMinusExpr
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvUMinusExpr
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvAndExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvAndExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvOrExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvOrExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvXorExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvXorExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvNotExpr
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvNotExpr
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvLeftShiftExprExpr
+ * Signature: (JIJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvLeftShiftExprExpr
+  (JNIEnv *, jclass, jlong, jint, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvRightShiftExprExpr
+ * Signature: (JIJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvRightShiftExprExpr
+  (JNIEnv *, jclass, jlong, jint, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvSignedRightShiftExprExpr
+ * Signature: (JIJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvSignedRightShiftExprExpr
+  (JNIEnv *, jclass, jlong, jint, jlong, jlong);
 
 #ifdef __cplusplus
 }

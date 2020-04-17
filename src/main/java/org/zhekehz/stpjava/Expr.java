@@ -26,6 +26,10 @@ public abstract class Expr {
         return this.fromRef(Native.vc_simplify(vc.getRef(), exprRef));
     }
 
+    public boolean isConst() {
+        return Native.isConst(exprRef);
+    }
+
     public void print() {
         Native.vc_printExpr(vc.getRef(), exprRef);
     }

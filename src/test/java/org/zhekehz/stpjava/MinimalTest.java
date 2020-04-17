@@ -27,7 +27,7 @@ public class MinimalTest {
         BitVector a1 = new BitVector(vc, "c", 32);
         BitVector b1 = BitVector.constant(vc, 32, 5);
         BitVector b2 = BitVector.constant(vc, 32, 6);
-        BoolExpr e = a1.equiv(b1).ifThenElse(a1.equiv(b2).not(), BoolExpr.getTrue(vc));
+        BoolExpr e = a1.equiv(b1).ifThenElse(a1.le(b2).not(), BoolExpr.getTrue(vc));
         assertEquals(QueryResult.INVALID, e.query());
         vc.printCounterExample();
         e.print();
