@@ -1,31 +1,9 @@
 package org.zhekehz.stpjava;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class BoolExpr extends Expr {
 
     public BoolExpr(ValidityChecker vc, long ref) {
         super(vc, ref);
-    }
-
-    public BoolExpr not() {
-        return new BoolExpr(vc, Native.vc_notExpr(vc.getRef(), exprRef));
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode() * 23 + 7;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof BoolExpr)) return false;
-        return super.equals(o);
-    }
-
-    @Override
-    public BoolExpr fromRef(long ref) {
-        return new BoolExpr(vc, ref);
     }
 
     public static BoolExpr getTrue(ValidityChecker vc) {
@@ -34,6 +12,10 @@ public class BoolExpr extends Expr {
 
     public static BoolExpr getFalse(ValidityChecker vc) {
         return new BoolExpr(vc, Native.vc_falseExpr(vc.getRef()));
+    }
+
+    public BoolExpr not() {
+        return new BoolExpr(vc, Native.vc_notExpr(vc.getRef(), exprRef));
     }
 
     public BoolExpr and(BoolExpr other) {
@@ -56,7 +38,15 @@ public class BoolExpr extends Expr {
         return new BoolExpr(vc, Native.vc_iffExpr(vc.getRef(), exprRef, other.exprRef));
     }
 
+    @SuppressWarnings({"unchecked"})
+    public <T extends Expr> T ifThenElse(T thenE, T elseE) {
+        return (T) thenE.fromRef(Native.vc_iteExpr(vc.getRef(), exprRef, thenE.exprRef, elseE.exprRef));
+    }
+
     public static BoolExpr andAll(ValidityChecker vc, BoolExpr[] children) {
+        if (children.length == 0) {
+            throw new IllegalArgumentException("Empty array");
+        }
         long[] refs = new long[children.length];
         for (int i = 0; i < children.length; i++) {
             refs[i] = children[i].exprRef;
@@ -65,16 +55,14 @@ public class BoolExpr extends Expr {
     }
 
     public static BoolExpr orAll(ValidityChecker vc, BoolExpr[] children) {
+        if (children.length == 0) {
+            throw new IllegalArgumentException("Empty array");
+        }
         long[] refs = new long[children.length];
         for (int i = 0; i < children.length; i++) {
             refs[i] = children[i].exprRef;
         }
         return new BoolExpr(vc, Native.vc_orExprN(vc.getRef(), refs, children.length));
-    }
-
-    @SuppressWarnings({"unchecked"})
-    public <T extends Expr> T ifThenElse(T thenE, T elseE) {
-        return (T) thenE.fromRef(Native.vc_iteExpr(vc.getRef(), exprRef, thenE.exprRef, elseE.exprRef));
     }
 
     public void assertFormula() {
@@ -83,6 +71,22 @@ public class BoolExpr extends Expr {
 
     public BitVector toBitVector() {
         return new BitVector(vc, 1, Native.vc_boolToBVExpr(vc.getRef(), exprRef));
+    }
+
+    @Override
+    public BoolExpr fromRef(long ref) {
+        return new BoolExpr(vc, ref);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() * 23 + 7;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof BoolExpr)) return false;
+        return super.equals(o);
     }
 
 }

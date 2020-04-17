@@ -9,20 +9,16 @@ public class ValidityChecker {
         System.loadLibrary("stp");
     }
 
-    public long getRef() {
-        return ref;
-    }
-
     public ValidityChecker() {
-        ref = Native.createValidityChecker();
-    }
-
-    public void printCounterExample() {
-        Native.vc_printCounterExample(ref);
+        ref = Native.vc_createValidityChecker();
     }
 
     public void destroy() {
         Native.vc_Destroy(ref);
+    }
+
+    public long getRef() {
+        return ref;
     }
 
     public void push() {
@@ -31,6 +27,10 @@ public class ValidityChecker {
 
     public void pop() {
         Native.vc_pop(ref);
+    }
+
+    public void printCounterExample() {
+        Native.vc_printCounterExample(ref);
     }
 
     @Override

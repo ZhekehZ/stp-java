@@ -5,7 +5,7 @@ public class BitVector extends Expr {
     private final int width;
 
     public BitVector(ValidityChecker vc, String name, int width) {
-        super(vc, Native.varExpr(vc.getRef(), name, Native.bvType(vc.getRef(), width)));
+        super(vc, Native.vc_varExpr(vc.getRef(), name, Native.vc_bvType(vc.getRef(), width)));
         this.width = width;
     }
 
@@ -14,25 +14,12 @@ public class BitVector extends Expr {
         this.width = width;
     }
 
-    static BitVector constant(ValidityChecker vc, int width, int value) {
-        return new BitVector(vc, width, Native.bvConstExprFromInt(vc.getRef(), width, value));
+    static BitVector fromInt(ValidityChecker vc, int width, int value) {
+        return new BitVector(vc, width, Native.vc_bvConstExprFromInt(vc.getRef(), width, value));
     }
 
-    BitVector plus(BitVector other) {
-        checkWidth(other);
-        return new BitVector(vc, width, Native.vc_bvPlusExpr(vc.getRef(), width, exprRef, other.exprRef));
-    }
-
-    BoolExpr equiv(BitVector other) {
-        checkWidth(other);
-        return new BoolExpr(vc, Native.vc_eqExpr(vc.getRef(), exprRef, other.exprRef));
-    }
-
-    private void checkWidth(BitVector other) {
-        super.checkVC(other);
-        if (other.width != width) {
-            throw new IllegalArgumentException("BV must have the same bit-width");
-        }
+    static BitVector fromLong(ValidityChecker vc, int width, long value) {
+        return new BitVector(vc, width, Native.vc_bvConstExprFromLL(vc.getRef(), width, value));
     }
 
     public int toInt() {
@@ -47,6 +34,16 @@ public class BitVector extends Expr {
             throw new IllegalStateException("BV is not constant");
         }
         return Native.getBVUnsignedLong(exprRef);
+    }
+
+    BoolExpr equiv(BitVector other) {
+        checkWidth(other);
+        return new BoolExpr(vc, Native.vc_eqExpr(vc.getRef(), exprRef, other.exprRef));
+    }
+
+    BitVector plus(BitVector other) {
+        checkWidth(other);
+        return new BitVector(vc, width, Native.vc_bvPlusExpr(vc.getRef(), width, exprRef, other.exprRef));
     }
 
     public BitVector minus(BitVector other) {
@@ -162,6 +159,25 @@ public class BitVector extends Expr {
                 Native.vc_bvSignedRightShiftExprExpr(vc.getRef(), resultWidth, exprRef, by.exprRef));
     }
 
+    public BitVector concat(BitVector other) {
+        return new BitVector(vc, width + other.width, Native.vc_bvConcatExpr(vc.getRef(), exprRef, other.exprRef));
+    }
+
+    public static BitVector sumAll(ValidityChecker vc, BitVector[] children) {
+        if (children.length == 0) {
+            throw new IllegalArgumentException("Empty array");
+        }
+        int width = children[0].width;
+        long[] refs = new long[children.length];
+        for (int i = 0; i < children.length; i++) {
+            if (width != children[i].width) {
+                throw new IllegalArgumentException("BVs must have the same bit-width");
+            }
+            refs[i] = children[i].exprRef;
+        }
+        return new BitVector(vc, width, Native.vc_bvPlusExprN(vc.getRef(), width, refs, children.length));
+    }
+
     public int getWidth() {
         return width;
     }
@@ -169,6 +185,13 @@ public class BitVector extends Expr {
     @Override
     public BitVector fromRef(long ref) {
         return new BitVector(vc, width, ref);
+    }
+
+    private void checkWidth(BitVector other) {
+        super.checkVC(other);
+        if (other.width != width) {
+            throw new IllegalArgumentException("BV must have the same bit-width");
+        }
     }
 
     @Override

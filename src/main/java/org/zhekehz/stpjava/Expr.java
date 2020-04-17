@@ -16,12 +16,6 @@ public abstract class Expr {
         return QueryResult.fromInt(Native.vc_query(vc.getRef(), exprRef));
     }
 
-    protected final void checkVC(Expr other) {
-        if (vc != other.vc) {
-            throw new IllegalArgumentException();
-        }
-    }
-
     public Expr simplify() {
         return this.fromRef(Native.vc_simplify(vc.getRef(), exprRef));
     }
@@ -32,6 +26,12 @@ public abstract class Expr {
 
     public void print() {
         Native.vc_printExpr(vc.getRef(), exprRef);
+    }
+
+    protected final void checkVC(Expr other) {
+        if (vc != other.vc) {
+            throw new IllegalStateException();
+        }
     }
 
     @Override
