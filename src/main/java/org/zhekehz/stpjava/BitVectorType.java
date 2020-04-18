@@ -8,6 +8,11 @@ public class BitVectorType implements ExprType {
     }
 
     @Override
+    public BitVectorExpr buildExpr(ValidityChecker vc, long ref) {
+        return new BitVectorExpr(vc, width, ref);
+    }
+
+    @Override
     public long getRef(ValidityChecker vc) {
         return Native.vc_bvType(vc.getRef(), width);
     }

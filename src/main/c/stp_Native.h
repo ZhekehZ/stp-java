@@ -153,6 +153,22 @@ JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1arrayType
 
 /*
  * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_readExpr
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1readExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_writeExpr
+ * Signature: (JJJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1writeExpr
+  (JNIEnv *, jclass, jlong, jlong, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
  * Method:    vc_printExpr
  * Signature: (JJ)V
  */

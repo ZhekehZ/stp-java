@@ -1,5 +1,6 @@
 package org.zhekehz.stpjava;
 
+import jdk.nashorn.internal.runtime.BitVector;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -32,6 +33,23 @@ public class MinimalTest {
         vc.printCounterExample();
         e.print();
         assertEquals(5, BitVectorExpr.fromInt(vc, 3, 2).concat(BitVectorExpr.fromLong(vc, 1, 1)).toInt());
+        vc.destroy();
+    }
+
+    @Test
+    public void araysTest() {
+        ValidityChecker vc = new ValidityChecker();
+        BitVectorType elementT = new BitVectorType(13);
+        BitVectorType indexT = new BitVectorType(2);
+
+        ArrayExpr<BitVectorType> array = new ArrayExpr<>(vc, "myArray", indexT, elementT);
+
+        BitVectorExpr i = BitVectorExpr.fromInt(vc, 2, 1);
+        BitVectorExpr v = BitVectorExpr.fromLong(vc, 13, 1024);
+
+        array = array.write(i, v);
+        System.out.println(((BitVectorExpr) array.read(i)).toInt());
+
         vc.destroy();
     }
 }

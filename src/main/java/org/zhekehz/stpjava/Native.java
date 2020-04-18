@@ -54,7 +54,10 @@ public final class Native {
     // ARRAY EXPRESSIONS
 
     static native long vc_arrayType(long vc, long typeIndex, long typeData);
-    // TODO: implement methods
+
+    static native long vc_readExpr(long vc, long array, long index);
+
+    static native long vc_writeExpr(long vc, long array, long index, long newValue);
 
     static native void vc_printExpr(long vc, long e);
 

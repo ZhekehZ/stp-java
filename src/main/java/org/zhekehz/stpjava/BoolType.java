@@ -1,9 +1,15 @@
 package org.zhekehz.stpjava;
 
 public class BoolType implements ExprType {
+
     @Override
     public long getRef(ValidityChecker vc) {
         return Native.vc_boolType(vc.getRef());
+    }
+
+    @Override
+    public BoolExpr buildExpr(ValidityChecker vc, long ref) {
+        return new BoolExpr(vc, ref);
     }
 
     @Override

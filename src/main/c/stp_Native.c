@@ -109,6 +109,10 @@ JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1orExprN
 
 NEW_FUN_3(vc_1arrayType, vc_arrayType, jlong, VC, jlong, Type, jlong, Type, jlong)
 
+NEW_FUN_3(vc_1readExpr, vc_readExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
+
+NEW_FUN_4(vc_1writeExpr, vc_writeExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong, Expr, jlong)
+
 // \ ARRAY EXPRESSIONS
 
 
