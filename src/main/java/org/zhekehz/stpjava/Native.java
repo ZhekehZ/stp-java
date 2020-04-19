@@ -74,7 +74,7 @@ public final class Native {
 
     static native int vc_query(long vc, long expr);
 
-//    DLL_PUBLIC Expr vc_getCounterExample(VC vc, Expr e);
+    static native long vc_getCounterExample(long vc, long e);
 
 //    DLL_PUBLIC void vc_getCounterExampleArray(VC vc, Expr e, Expr** outIndices,
 //                                              Expr** outValues, int* outSize);

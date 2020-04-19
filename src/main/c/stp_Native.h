@@ -209,6 +209,14 @@ JNIEXPORT jint JNICALL Java_org_zhekehz_stpjava_Native_vc_1query
 
 /*
  * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_getCounterExample
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1getCounterExample
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
  * Method:    vc_push
  * Signature: (J)V
  */

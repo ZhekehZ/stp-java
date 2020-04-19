@@ -1,9 +1,8 @@
 package org.zhekehz.stpjava;
 
-import jdk.nashorn.internal.runtime.BitVector;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MinimalTest {
 
@@ -37,18 +36,16 @@ public class MinimalTest {
     }
 
     @Test
-    public void araysTest() {
+    public void arraysTest() {
         ValidityChecker vc = new ValidityChecker();
-        BitVectorType elementT = new BitVectorType(13);
-        BitVectorType indexT = new BitVectorType(2);
 
-        ArrayExpr<BitVectorType> array = new ArrayExpr<>(vc, "myArray", indexT, elementT);
+        ArrayExpr array = new ArrayExpr(vc, "myArray", 2, 13);
 
         BitVectorExpr i = BitVectorExpr.fromInt(vc, 2, 1);
         BitVectorExpr v = BitVectorExpr.fromLong(vc, 13, 1024);
 
         array = array.write(i, v);
-        System.out.println(((BitVectorExpr) array.read(i)).toInt());
+        System.out.println(array.read(i).toInt());
 
         vc.destroy();
     }

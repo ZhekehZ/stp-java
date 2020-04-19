@@ -1,55 +1,57 @@
 package org.zhekehz.stpjava;
 
-public class ArrayExpr<ElementType extends ExprType> extends Expr {
+public class ArrayExpr extends Expr {
 
-    private final BitVectorType indexType;
-    private final ElementType elementType;
+    private final int indexWidth;
+    private final int elementWidth;
 
-    public ArrayExpr(ValidityChecker vc, String name, BitVectorType indexType, ElementType elementType) {
+    public ArrayExpr(ValidityChecker vc, String name, int indexWidth, int elementWidth) {
         super(vc, Native.vc_varExpr(vc.getRef(), name,
-                Native.vc_arrayType(vc.getRef(), indexType.getRef(vc), elementType.getRef(vc))));
-        this.indexType = indexType;
-        this.elementType = elementType;
+                Native.vc_arrayType(vc.getRef(),
+                        Native.vc_bvType(vc.getRef(), indexWidth),
+                        Native.vc_bvType(vc.getRef(), elementWidth))));
+        this.indexWidth = indexWidth;
+        this.elementWidth = elementWidth;
     }
 
-    public ArrayExpr(ValidityChecker vc, BitVectorType indexType, ElementType elementType, long ref) {
+    public ArrayExpr(ValidityChecker vc, int indexWidth, int elementWidth, long ref) {
         super(vc, ref);
-        this.indexType = indexType;
-        this.elementType = elementType;
+        this.indexWidth = indexWidth;
+        this.elementWidth = elementWidth;
     }
 
-    Expr read(BitVectorExpr index) {
-        return elementType.buildExpr(vc, Native.vc_readExpr(vc.getRef(), exprRef, index.exprRef));
+    BitVectorExpr read(BitVectorExpr index) {
+        return new BitVectorExpr(vc, elementWidth, Native.vc_readExpr(vc.getRef(), exprRef, index.exprRef));
     }
 
-    ArrayExpr<ElementType> write(BitVectorExpr index, Expr expr) {
-        if (!expr.getType().equals(elementType)) {
+    ArrayExpr write(BitVectorExpr index, BitVectorExpr expr) {
+        if (expr.getWidth() != elementWidth) {
             throw new IllegalArgumentException("expr type is invalid");
         }
-        return new ArrayExpr<>(vc, indexType, elementType, Native.vc_writeExpr(vc.getRef(), exprRef, index.exprRef, expr.exprRef));
+        return new ArrayExpr(vc, indexWidth, elementWidth,
+                Native.vc_writeExpr(vc.getRef(), exprRef, index.exprRef, expr.exprRef));
     }
 
     @Override
-    public ArrayExpr<ElementType> fromRef(long ref) {
-        return new ArrayExpr<>(vc, indexType, elementType, ref);
+    public ArrayExpr fromRef(long ref) {
+        return new ArrayExpr(vc, indexWidth, elementWidth, ref);
     }
 
     @Override
-    public ArrayType<ElementType> getType() {
-        return new ArrayType<>(indexType, elementType);
+    protected boolean sameTypeWith(Expr other) {
+        if (other == this) return true;
+        if (!(other instanceof ArrayExpr)) return false;
+        ArrayExpr array = (ArrayExpr) other;
+        return indexWidth == array.indexWidth && elementWidth == array.elementWidth;
     }
 
     @Override
     public int hashCode() {
-        return (indexType.hashCode() * 31 + elementType.hashCode()) * 13 + super.hashCode();
+        return (Integer.hashCode(indexWidth) * 31 + Integer.hashCode(elementWidth)) * 13 + super.hashCode();
     }
 
-    @SuppressWarnings({"unchecked"})
     @Override
     public boolean equals(Object o) {
-        if (o == this) return true;
-        if (!(o instanceof ArrayExpr)) return false;
-        ArrayExpr<ElementType> other = (ArrayExpr<ElementType>) o;
-        return indexType == other.indexType && elementType == other.elementType && super.equals(o);
+        return super.equals(o);
     }
 }

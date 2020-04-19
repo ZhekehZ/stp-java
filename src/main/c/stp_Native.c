@@ -129,6 +129,8 @@ NEW_FUN_2(vc_1simplify, vc_simplify, jlong, VC, jlong, Expr, jlong)
 
 NEW_FUN_2(vc_1query, vc_query, jlong, VC, jlong, Expr, jint)
 
+NEW_FUN_2(vc_1getCounterExample, vc_getCounterExample, jlong, VC, jlong, Expr, jlong)
+
 NEW_FUN_1(vc_1push, vc_push, jlong, VC, void)
 
 NEW_FUN_1(vc_1pop, vc_pop, jlong, VC, void)

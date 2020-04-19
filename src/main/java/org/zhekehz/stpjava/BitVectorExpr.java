@@ -183,8 +183,10 @@ public class BitVectorExpr extends Expr {
     }
 
     @Override
-    public ExprType getType() {
-        return new BitVectorType(width);
+    protected boolean sameTypeWith(Expr other) {
+        if (other == this) return true;
+        if (!(other instanceof BitVectorExpr)) return false;
+        return width == ((BitVectorExpr) other).width;
     }
 
     @Override
@@ -206,7 +208,6 @@ public class BitVectorExpr extends Expr {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof BitVectorExpr)) return false;
-        return width == ((BitVectorExpr) o).width && super.equals(o);
+        return super.equals(o);
     }
 }

@@ -34,7 +34,7 @@ public abstract class Expr {
         }
     }
 
-    public abstract ExprType getType();
+    protected abstract boolean sameTypeWith(Expr other);
 
     @Override
     public int hashCode() {
@@ -45,6 +45,6 @@ public abstract class Expr {
     public boolean equals(Object o) {
         if (o == this) return true;
         if (!(o instanceof Expr)) return false;
-        return vc.equals(((Expr) o).vc) && exprRef == ((Expr) o).exprRef;
+        return sameTypeWith((Expr) o) && vc.equals(((Expr) o).vc) && exprRef == ((Expr) o).exprRef;
     }
 }

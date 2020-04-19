@@ -61,11 +61,15 @@ public class BoolExpr extends Expr {
     }
 
     public BoolExpr iff(BoolExpr other) {
+
         return new BoolExpr(vc, Native.vc_iffExpr(vc.getRef(), exprRef, other.exprRef));
     }
 
     @SuppressWarnings({"unchecked"})
     public <T extends Expr> T ifThenElse(T thenE, T elseE) {
+        if (!thenE.sameTypeWith(elseE)) {
+            throw new IllegalArgumentException("arguments must be of the same type");
+        }
         return (T) thenE.fromRef(Native.vc_iteExpr(vc.getRef(), exprRef, thenE.exprRef, elseE.exprRef));
     }
 
@@ -88,13 +92,12 @@ public class BoolExpr extends Expr {
     }
 
     @Override
-    public ExprType getType() {
-        return new BoolType();
+    protected boolean sameTypeWith(Expr other) {
+        return other instanceof BoolExpr;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof BoolExpr)) return false;
         return super.equals(o);
     }
 
