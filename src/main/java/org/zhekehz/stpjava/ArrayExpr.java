@@ -1,5 +1,7 @@
 package org.zhekehz.stpjava;
 
+import java.util.HashMap;
+
 public class ArrayExpr extends Expr {
 
     private final int indexWidth;
@@ -43,6 +45,26 @@ public class ArrayExpr extends Expr {
         if (!(other instanceof ArrayExpr)) return false;
         ArrayExpr array = (ArrayExpr) other;
         return indexWidth == array.indexWidth && elementWidth == array.elementWidth;
+    }
+
+    public HashMap<Integer, Integer> getCounterExampleIntInt() {
+        long[] ce = Native.vc_getCounterExampleArray(vc.getRef(), exprRef);
+        HashMap<Integer, Integer> result = new HashMap<>();
+        int size = ce.length / 2;
+        for (int i = 0; i < size; ++i) {
+            result.put(Native.getBVInt(ce[i]), Native.getBVInt(ce[size + i]));
+        }
+        return result;
+    }
+
+    public HashMap<Long, Long> getCounterExampleLongLong() {
+        long[] ce = Native.vc_getCounterExampleArray(vc.getRef(), exprRef);
+        HashMap<Long, Long> result = new HashMap<>();
+        int size = ce.length / 2;
+        for (int i = 0; i < size; ++i) {
+            result.put(Native.getBVUnsignedLong(ce[i]), Native.getBVUnsignedLong(ce[size + i]));
+        }
+        return result;
     }
 
     @Override

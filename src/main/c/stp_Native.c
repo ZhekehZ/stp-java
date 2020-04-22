@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "stp_Native.h"
 #include <stp/c_interface.h>
@@ -139,6 +140,21 @@ NEW_FUN_1(getBVInt, getBVInt, jlong, Expr, jint)
 
 NEW_FUN_1(getBVUnsignedLong, getBVUnsignedLongLong, jlong, Expr, jlong)
 
+JNIEXPORT jlongArray JNICALL Java_org_zhekehz_stpjava_Native_vc_1getCounterExampleArray
+  (JNIEnv * env, jclass cls, jlong vc, jlong expr) {
+    int size = -1;
+    Expr * indices, * values;
+    vc_getCounterExampleArray((VC) vc, (Expr) expr, &indices, &values, &size);
+    long * longs = malloc(2 * size * sizeof(long));
+    for (int i = 0; i < size; ++i) {
+        longs[i] = (long) indices[i];
+        longs[size + i] = (long) values[i];
+    }
+    jlongArray result = (jlongArray) (*env)->NewLongArray(env, 2 * size);
+    (*env)->SetLongArrayRegion(env, result, 0, 2 * size, longs);
+    return result;
+}
+
 // \ CONTEXT RELATED METHODS
 
 
@@ -232,32 +248,42 @@ NEW_FUN_4(vc_1bvSignedRightShiftExprExpr, vc_bvSignedRightShiftExprExpr, jlong, 
 // \ BITVECTOR SHIFT OPERATIONS
 
 
-    /* TODO:
-     *  BITVECTOR EXTRACTION & EXTENSION
-     *  * implement methods
-     *  \ BITVECTOR EXTRACTION & EXTENSION
-     */
+//  BITVECTOR EXTRACTION & EXTENSION
+
+NEW_FUN_4(vc_1bvExtract, vc_bvExtract, jlong, VC, jlong, Expr, jint, int, jint, int, jlong)
+
+NEW_FUN_3(vc_1bvBoolExtract_1Zero, vc_bvBoolExtract_Zero, jlong, VC, jlong, Expr, jint, int, jlong)
+
+NEW_FUN_3(vc_1bvBoolExtract_1One, vc_bvBoolExtract_One, jlong, VC, jlong, Expr, jint, int, jlong)
+
+//  \ BITVECTOR EXTRACTION & EXTENSION
 
 
-    /* TODO:
-     *  CONVENIENCE FUNCTIONS FOR ARRAYS
-     *  * implement methods
-     *  \ CONVENIENCE FUNCTIONS FOR ARRAYS
-     */
+//  CONVENIENCE FUNCTIONS FOR ARRAYS
 
-    /* TODO:
-     *  CONVENIENCE FUNCTIONS FOR ARRAYS
-     *  * implement methods
-     *  \ CONVENIENCE FUNCTIONS FOR ARRAYS
-     */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvCreateMemoryArray
+  (JNIEnv * env, jclass cls, jlong vc, jstring name) {
+    return (jlong) vc_bvCreateMemoryArray((VC) vc, (const char*) (*env)->GetStringUTFChars(env, name, NULL));
+}
+
+//  \ CONVENIENCE FUNCTIONS FOR ARRAYS
 
 
 // GENERAL EXPRESSION OPERATIONS
 
-JNIEXPORT void JNICALL Java_org_zhekehz_stpjava_Native_vc_1Destroy
-  (JNIEnv * env, jclass cls, jlong vc) {
-    vc_Destroy((VC) vc);
-}
+NEW_FUN_1(vc_1Destroy, vc_Destroy, jlong, VC, void)
+
+NEW_FUN_1(vc_1DeleteExpr, vc_DeleteExpr, jlong, Expr, void)
+
+NEW_FUN_1(getExprKind, getExprKind, jlong, Expr, jint)
+
+NEW_FUN_1(vc_1isBool, vc_isBool, jlong, Expr, jint)
+
+NEW_FUN_1(vc_1getWholeCounterExample, vc_getWholeCounterExample, jlong, VC, jlong)
+
+NEW_FUN_1(vc_1deleteWholeCounterExample, vc_deleteWholeCounterExample, jlong, WholeCounterExample, void)
+
+NEW_FUN_3(vc_1getTermFromCounterExample, vc_getTermFromCounterExample, jlong, VC, jlong, Expr, jlong, WholeCounterExample, jlong)
 
 // \ GENERAL EXPRESSION OPERATIONS
 

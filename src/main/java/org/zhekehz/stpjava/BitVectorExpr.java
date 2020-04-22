@@ -52,7 +52,7 @@ public class BitVectorExpr extends Expr {
     }
 
     BoolExpr equiv(BitVectorExpr other) {
-        checkWidth(other);
+//        checkWidth(other);
         return new BoolExpr(vc, Native.vc_eqExpr(vc.getRef(), exprRef, other.exprRef));
     }
 
@@ -176,6 +176,31 @@ public class BitVectorExpr extends Expr {
 
     public BitVectorExpr concat(BitVectorExpr other) {
         return new BitVectorExpr(vc, width + other.width, Native.vc_bvConcatExpr(vc.getRef(), exprRef, other.exprRef));
+    }
+
+    public BitVectorExpr extract(int highBit, int lowBit) {
+        if (lowBit > highBit || lowBit < 0 || highBit >= width) {
+            throw new IllegalArgumentException("!( width > highBit >= lowBit >= 0 )");
+        }
+        return new BitVectorExpr(vc, highBit - lowBit + 1, Native.vc_bvExtract(vc.getRef(), exprRef, highBit, lowBit));
+    }
+
+    public BoolExpr extractOne(int bit) {
+        if (bit < 0 || bit >= width) {
+            throw new IllegalArgumentException("!( 0 <= bit < width )");
+        }
+        return new BoolExpr(vc, Native.vc_bvBoolExtract_One(vc.getRef(), exprRef, bit));
+    }
+
+    public BoolExpr extractZero(int bit) {
+        if (bit < 0 || bit >= width) {
+            throw new IllegalArgumentException("!( 0 <= bit < width )");
+        }
+        return new BoolExpr(vc, Native.vc_bvBoolExtract_Zero(vc.getRef(), exprRef, bit));
+    }
+
+    public BitVectorExpr getCounterExample() {
+        return new BitVectorExpr(vc, width, Native.vc_getCounterExample(vc.getRef(), exprRef));
     }
 
     public int getWidth() {

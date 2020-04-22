@@ -217,6 +217,14 @@ JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1getCounterExample
 
 /*
  * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_getCounterExampleArray
+ * Signature: (JJ)[J
+ */
+JNIEXPORT jlongArray JNICALL Java_org_zhekehz_stpjava_Native_vc_1getCounterExampleArray
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
  * Method:    vc_push
  * Signature: (J)V
  */
@@ -481,10 +489,58 @@ JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvSignedRightShiftEx
 
 /*
  * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvExtract
+ * Signature: (JJII)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvExtract
+  (JNIEnv *, jclass, jlong, jlong, jint, jint);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvBoolExtract_Zero
+ * Signature: (JJI)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvBoolExtract_1Zero
+  (JNIEnv *, jclass, jlong, jlong, jint);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvBoolExtract_One
+ * Signature: (JJI)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvBoolExtract_1One
+  (JNIEnv *, jclass, jlong, jlong, jint);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvCreateMemoryArray
+ * Signature: (JLjava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvCreateMemoryArray
+  (JNIEnv *, jclass, jlong, jstring);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
  * Method:    vc_Destroy
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_org_zhekehz_stpjava_Native_vc_1Destroy
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_DeleteExpr
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_org_zhekehz_stpjava_Native_vc_1DeleteExpr
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_isBool
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_org_zhekehz_stpjava_Native_vc_1isBool
   (JNIEnv *, jclass, jlong);
 
 /*

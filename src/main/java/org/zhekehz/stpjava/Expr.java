@@ -36,6 +36,10 @@ public abstract class Expr {
 
     protected abstract boolean sameTypeWith(Expr other);
 
+    public void destroy() {
+        Native.vc_DeleteExpr(exprRef);
+    }
+
     @Override
     public int hashCode() {
         return Long.hashCode(exprRef) * 13 + vc.hashCode();

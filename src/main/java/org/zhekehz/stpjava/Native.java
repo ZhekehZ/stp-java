@@ -76,8 +76,9 @@ public final class Native {
 
     static native long vc_getCounterExample(long vc, long e);
 
-//    DLL_PUBLIC void vc_getCounterExampleArray(VC vc, Expr e, Expr** outIndices,
-//                                              Expr** outValues, int* outSize);
+    /**/
+    static native long[] vc_getCounterExampleArray(long vc, long e);
+    /**/
 
     static native void vc_push(long vc);
 
@@ -173,29 +174,39 @@ public final class Native {
     // \ BITVECTOR SHIFT OPERATIONS
 
 
-    /* TODO:
-     *  BITVECTOR EXTRACTION & EXTENSION
-     *  * implement methods
-     *  \ BITVECTOR EXTRACTION & EXTENSION
-     */
+    // BITVECTOR EXTRACTION & EXTENSION
+
+    static native long vc_bvExtract(long vc, long child, int high_bit_no, int low_bit_no);
+
+    static native long vc_bvBoolExtract_Zero(long vc, long x, int bit_no);
+
+    static native long vc_bvBoolExtract_One(long vc, long x, int bit_no);
+
+    // DLL_PUBLIC Expr vc_bvSignExtend(VC vc, Expr child, int newWidth);
+
+    // \ BITVECTOR EXTRACTION & EXTENSION
 
 
-    /* TODO:
-     *  CONVENIENCE FUNCTIONS FOR ARRAYS
-     *  * implement methods
-     *  \ CONVENIENCE FUNCTIONS FOR ARRAYS
-     */
+    // CONVENIENCE FUNCTIONS FOR ARRAYS
 
-    /* TODO:
-     *  CONVENIENCE FUNCTIONS FOR ARRAYS
-     *  * implement methods
-     *  \ CONVENIENCE FUNCTIONS FOR ARRAYS
-     */
+    static native long vc_bvCreateMemoryArray(long vc, String name);
+
+    // CONVENIENCE FUNCTIONS FOR ARRAYS
 
 
     // GENERAL EXPRESSION OPERATIONS
 
     static native void vc_Destroy(long vc);
+
+    static native void vc_DeleteExpr(long e);
+
+    static native int vc_isBool(long e);
+
+    // Not sure about these methods
+//    static native int getExprKind(long e);
+//    static native long vc_getWholeCounterExample(long vc);
+//    static native long vc_getTermFromCounterExample(long vc, long e, long c);
+//    static native void vc_deleteWholeCounterExample(long cc);
 
     // \ GENERAL EXPRESSION OPERATIONS
 
