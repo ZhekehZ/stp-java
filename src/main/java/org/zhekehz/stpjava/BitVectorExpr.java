@@ -52,7 +52,7 @@ public class BitVectorExpr extends Expr {
     }
 
     BoolExpr equiv(BitVectorExpr other) {
-//        checkWidth(other);
+        checkWidth(other);
         return new BoolExpr(vc, Native.vc_eqExpr(vc.getRef(), exprRef, other.exprRef));
     }
 

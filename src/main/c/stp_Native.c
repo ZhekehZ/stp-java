@@ -241,7 +241,7 @@ NEW_FUN_2(vc_1bvNotExpr, vc_bvNotExpr, jlong, VC, jlong, Expr, jlong)
 
 NEW_FUN_4(vc_1bvLeftShiftExprExpr, vc_bvLeftShiftExprExpr, jlong, VC, jint, int, jlong, Expr, jlong, Expr, jlong)
 
-NEW_FUN_4(vc_1bvRightShiftExprExpr, vc_bvSignedRightShiftExprExpr, jlong, VC, jint, int, jlong, Expr, jlong, Expr, jlong)
+NEW_FUN_4(vc_1bvRightShiftExprExpr, vc_bvRightShiftExprExpr, jlong, VC, jint, int, jlong, Expr, jlong, Expr, jlong)
 
 NEW_FUN_4(vc_1bvSignedRightShiftExprExpr, vc_bvSignedRightShiftExprExpr, jlong, VC, jint, int, jlong, Expr, jlong, Expr, jlong)
 
