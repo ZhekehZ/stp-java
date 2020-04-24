@@ -118,17 +118,6 @@ NEW_FUN_2(vc_1printExpr, vc_printExpr, jlong, VC, jlong, Expr, void)
 
 NEW_FUN_1(vc_1printCounterExample, vc_printCounterExample, jlong, VC, void)
 
-JNIEXPORT jstring JNICALL Java_org_zhekehz_stpjava_Native_vc_1printExprToBuffer
-  (JNIEnv * env, jclass cls, jlong vc, jlong expr) {
-    char * buf;
-    unsigned long len;
-    vc_printExprToBuffer((VC) vc, (Expr) expr, &buf, &len);
-
-    jstring res = (*env)->NewStringUTF(env, buf);
-    free(buf);
-    return res;
-}
-
 // \ ARRAY EXPRESSIONS
 
 
@@ -296,6 +285,14 @@ NEW_FUN_1(vc_1getWholeCounterExample, vc_getWholeCounterExample, jlong, VC, jlon
 NEW_FUN_1(vc_1deleteWholeCounterExample, vc_deleteWholeCounterExample, jlong, WholeCounterExample, void)
 
 NEW_FUN_3(vc_1getTermFromCounterExample, vc_getTermFromCounterExample, jlong, VC, jlong, Expr, jlong, WholeCounterExample, jlong)
+
+JNIEXPORT jstring JNICALL Java_org_zhekehz_stpjava_Native_exprString
+  (JNIEnv * env, jclass cls, jlong expr) {
+    char * buf = exprString((Expr) expr);
+    jstring res = (*env)->NewStringUTF(env, buf);
+    free(buf);
+    return res;
+}
 
 // \ GENERAL EXPRESSION OPERATIONS
 

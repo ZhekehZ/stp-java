@@ -63,7 +63,7 @@ public final class Native {
 
     static native void vc_printCounterExample(long vc);
 
-    static native String vc_printExprToBuffer(long vc, long e);
+//    static native String vc_printExprToBuffer(long vc, long e);
 
     // \ ARRAY EXPRESSIONS
 
@@ -203,6 +203,8 @@ public final class Native {
     static native void vc_DeleteExpr(long e);
 
     static native int vc_isBool(long e);
+
+    static native String exprString(long e);
 
     // Not sure about these methods
 //    static native int getExprKind(long e);

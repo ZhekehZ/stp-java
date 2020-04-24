@@ -42,7 +42,7 @@ public abstract class Expr {
 
     @Override
     public String toString() {
-        return Native.vc_printExprToBuffer(vc.getRef(), exprRef);
+        return Native.exprString(exprRef);
     }
 
     @Override
