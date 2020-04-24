@@ -114,12 +114,22 @@ NEW_FUN_3(vc_1readExpr, vc_readExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong)
 
 NEW_FUN_4(vc_1writeExpr, vc_writeExpr, jlong, VC, jlong, Expr, jlong, Expr, jlong, Expr, jlong)
 
-// \ ARRAY EXPRESSIONS
-
-
 NEW_FUN_2(vc_1printExpr, vc_printExpr, jlong, VC, jlong, Expr, void)
 
 NEW_FUN_1(vc_1printCounterExample, vc_printCounterExample, jlong, VC, void)
+
+JNIEXPORT jstring JNICALL Java_org_zhekehz_stpjava_Native_vc_1printExprToBuffer
+  (JNIEnv * env, jclass cls, jlong vc, jlong expr) {
+    char * buf;
+    unsigned long len;
+    vc_printExprToBuffer((VC) vc, (Expr) expr, &buf, &len);
+
+    jstring res = (*env)->NewStringUTF(env, buf);
+    free(buf);
+    return res;
+}
+
+// \ ARRAY EXPRESSIONS
 
 
 // CONTEXT RELATED METHODS
@@ -255,6 +265,8 @@ NEW_FUN_4(vc_1bvExtract, vc_bvExtract, jlong, VC, jlong, Expr, jint, int, jint, 
 NEW_FUN_3(vc_1bvBoolExtract_1Zero, vc_bvBoolExtract_Zero, jlong, VC, jlong, Expr, jint, int, jlong)
 
 NEW_FUN_3(vc_1bvBoolExtract_1One, vc_bvBoolExtract_One, jlong, VC, jlong, Expr, jint, int, jlong)
+
+NEW_FUN_3(vc_1bvSignExtend, vc_bvSignExtend, jlong, VC, jlong, Expr, jint, int, jlong)
 
 //  \ BITVECTOR EXTRACTION & EXTENSION
 

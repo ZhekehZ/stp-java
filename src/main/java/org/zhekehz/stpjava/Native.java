@@ -63,6 +63,8 @@ public final class Native {
 
     static native void vc_printCounterExample(long vc);
 
+    static native String vc_printExprToBuffer(long vc, long e);
+
     // \ ARRAY EXPRESSIONS
 
 
@@ -182,7 +184,7 @@ public final class Native {
 
     static native long vc_bvBoolExtract_One(long vc, long x, int bit_no);
 
-    // DLL_PUBLIC Expr vc_bvSignExtend(VC vc, Expr child, int newWidth);
+    static native long vc_bvSignExtend(long vc, long child, int newWidth);
 
     // \ BITVECTOR EXTRACTION & EXTENSION
 

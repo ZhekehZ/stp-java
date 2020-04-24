@@ -37,10 +37,14 @@ public class TestConst extends TestBase {
 
         BoolExpr test2 = ff.signedRightShift(i3, 4).equiv(ff);
         assertTrue(test2.toBoolean());
+
+        assertEquals(0b11111111, ff.signExtend(8).toInt());
+        assertEquals(0b00000011, i3.signExtend(8).toInt());
     }
 
     @Test
     public void test4() {
         assertTrue(BoolExpr.getTrue(vc).toBitVector().extractOne(0).toBoolean());
     }
+
 }

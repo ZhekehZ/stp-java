@@ -41,6 +41,11 @@ public abstract class Expr {
     }
 
     @Override
+    public String toString() {
+        return Native.vc_printExprToBuffer(vc.getRef(), exprRef);
+    }
+
+    @Override
     public int hashCode() {
         return Long.hashCode(exprRef) * 13 + vc.hashCode();
     }

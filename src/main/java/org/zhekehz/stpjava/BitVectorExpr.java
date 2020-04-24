@@ -199,6 +199,13 @@ public class BitVectorExpr extends Expr {
         return new BoolExpr(vc, Native.vc_bvBoolExtract_Zero(vc.getRef(), exprRef, bit));
     }
 
+    public BitVectorExpr signExtend(int newWidth) {
+        if (newWidth <= 0) {
+            throw new IllegalArgumentException("newWidth must be > 0");
+        }
+        return new BitVectorExpr(vc, newWidth, Native.vc_bvSignExtend(vc.getRef(), exprRef, newWidth));
+    }
+
     public BitVectorExpr getCounterExample() {
         return new BitVectorExpr(vc, width, Native.vc_getCounterExample(vc.getRef(), exprRef));
     }

@@ -185,6 +185,14 @@ JNIEXPORT void JNICALL Java_org_zhekehz_stpjava_Native_vc_1printCounterExample
 
 /*
  * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_printExprToBuffer
+ * Signature: (JJ)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_org_zhekehz_stpjava_Native_vc_1printExprToBuffer
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
  * Method:    vc_assertFormula
  * Signature: (JJ)V
  */
@@ -509,6 +517,14 @@ JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvBoolExtract_1Zero
  * Signature: (JJI)J
  */
 JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvBoolExtract_1One
+  (JNIEnv *, jclass, jlong, jlong, jint);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvSignExtend
+ * Signature: (JJI)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvSignExtend
   (JNIEnv *, jclass, jlong, jlong, jint);
 
 /*
