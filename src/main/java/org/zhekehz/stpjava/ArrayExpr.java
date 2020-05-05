@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 public class ArrayExpr extends Expr {
 
-    private final int indexWidth;
-    private final int elementWidth;
+    protected final int indexWidth;
+    protected final int elementWidth;
 
     public ArrayExpr(ValidityChecker vc, String name, int indexWidth, int elementWidth) {
         super(vc, Native.vc_varExpr(vc.getRef(), name,
@@ -23,12 +23,15 @@ public class ArrayExpr extends Expr {
     }
 
     BitVectorExpr read(BitVectorExpr index) {
+        if (index.getWidth() != indexWidth) {
+            throw new IllegalArgumentException("argument has invalid bit-width");
+        }
         return new BitVectorExpr(vc, elementWidth, Native.vc_readExpr(vc.getRef(), exprRef, index.exprRef));
     }
 
     ArrayExpr write(BitVectorExpr index, BitVectorExpr expr) {
-        if (expr.getWidth() != elementWidth) {
-            throw new IllegalArgumentException("expr type is invalid");
+        if (expr.getWidth() != elementWidth || index.getWidth() != indexWidth) {
+            throw new IllegalArgumentException("argument has invalid bit-width");
         }
         return new ArrayExpr(vc, indexWidth, elementWidth,
                 Native.vc_writeExpr(vc.getRef(), exprRef, index.exprRef, expr.exprRef));

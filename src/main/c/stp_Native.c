@@ -127,6 +127,8 @@ NEW_FUN_2(vc_1assertFormula, vc_assertFormula, jlong, VC, jlong, Expr, void)
 
 NEW_FUN_2(vc_1simplify, vc_simplify, jlong, VC, jlong, Expr, jlong)
 
+NEW_FUN_4(vc_1query_1with_1timeout, vc_query_with_timeout, jlong, VC, jlong, Expr, jint, int, jint, int, jint)
+
 NEW_FUN_2(vc_1query, vc_query, jlong, VC, jlong, Expr, jint)
 
 NEW_FUN_2(vc_1getCounterExample, vc_getCounterExample, jlong, VC, jlong, Expr, jlong)
@@ -267,6 +269,12 @@ JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvCreateMemoryArray
     return (jlong) vc_bvCreateMemoryArray((VC) vc, (const char*) (*env)->GetStringUTFChars(env, name, NULL));
 }
 
+NEW_FUN_4(vc_1bvReadMemoryArray, vc_bvReadMemoryArray, jlong, VC, jlong, Expr, jlong, Expr, jint, int, jlong)
+
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvWriteToMemoryArray
+  (JNIEnv * env, jclass cls, jlong vc, jlong arr, jlong idx, jlong elem, jint numberOfBytes) {
+    return (jlong) vc_bvWriteToMemoryArray((VC) vc, (Expr) arr, (Expr) idx, (Expr) elem, (int) numberOfBytes);
+}
 //  \ CONVENIENCE FUNCTIONS FOR ARRAYS
 
 
@@ -293,6 +301,12 @@ JNIEXPORT jstring JNICALL Java_org_zhekehz_stpjava_Native_exprString
     free(buf);
     return res;
 }
+
+NEW_FUN_1(vc_1supportsCryptominisat, vc_supportsCryptominisat, jlong, VC, jboolean)
+
+NEW_FUN_1(vc_1useCryptominisat, vc_useCryptominisat, jlong, VC, jboolean)
+
+NEW_FUN_1(vc_1isUsingCryptominisat, vc_isUsingCryptominisat, jlong, VC, jboolean)
 
 // \ GENERAL EXPRESSION OPERATIONS
 

@@ -74,6 +74,8 @@ public final class Native {
 
     static native long vc_simplify(long vc, long e);
 
+    static native int vc_query_with_timeout(long vc, long e, int timeout_max_conflicts, int timeout_max_time);
+
     static native int vc_query(long vc, long expr);
 
     static native long vc_getCounterExample(long vc, long e);
@@ -193,6 +195,10 @@ public final class Native {
 
     static native long vc_bvCreateMemoryArray(long vc, String name);
 
+    static native long vc_bvReadMemoryArray(long vc, long array, long byteIndex, int numOfBytes);
+
+    static native long vc_bvWriteToMemoryArray(long vc, long array, long byteIndex, long element, int numOfBytes);
+
     // CONVENIENCE FUNCTIONS FOR ARRAYS
 
 
@@ -206,11 +212,18 @@ public final class Native {
 
     static native String exprString(long e);
 
+    static native int getExprKind(long e);
+
     // Not sure about these methods
-//    static native int getExprKind(long e);
 //    static native long vc_getWholeCounterExample(long vc);
 //    static native long vc_getTermFromCounterExample(long vc, long e, long c);
 //    static native void vc_deleteWholeCounterExample(long cc);
+
+    static native boolean vc_supportsCryptominisat(long vc);
+
+    static native boolean vc_useCryptominisat(long vc);
+
+    static native boolean vc_isUsingCryptominisat(long vc);
 
     // \ GENERAL EXPRESSION OPERATIONS
 

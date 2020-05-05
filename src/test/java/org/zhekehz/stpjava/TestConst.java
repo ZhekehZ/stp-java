@@ -47,4 +47,34 @@ public class TestConst extends TestBase {
         assertTrue(BoolExpr.getTrue(vc).toBitVector().extractOne(0).toBoolean());
     }
 
+    @Test
+    public void test5() {
+        MemoryArrayExpr array = new MemoryArrayExpr(vc, "mem_array");
+
+        BitVectorExpr idx1 = BitVectorExpr.fromInt(vc, 32, 0);
+        BitVectorExpr idx2 = BitVectorExpr.fromInt(vc, 32, 1);
+
+        BitVectorExpr bv1 = array.read(idx1, 2);
+        BitVectorExpr bv2 = array.read(idx2, 1);
+
+        bv1.equiv(BitVectorExpr.fromInt(vc, 16, 0b10010101010)).assertFormula();
+        BoolExpr.getFalse(vc).query();
+
+        assertEquals(0b10010101010, bv1.getCounterExample().toInt());
+        assertEquals(0b10101010, array.read(idx1, 1).getCounterExample().toInt());
+        assertEquals(0b100, bv2.getCounterExample().toInt());
+    }
+
+    @Test
+    public void test6() {
+        BitVectorExpr bv = new BitVectorExpr(vc, "123", 123);
+
+        assertEquals(Kind.BVCONST, BitVectorExpr.fromInt(vc, 12, 123).getKind());
+        assertEquals(Kind.SYMBOL, bv.getKind());
+        assertEquals(Kind.BVPLUS, bv.plus(BitVectorExpr.fromInt(vc, 123, 1)).getKind());
+        assertEquals(Kind.BVXOR, bv.xor(BitVectorExpr.fromInt(vc, 123, 123)).getKind());
+        assertEquals(Kind.EQ, bv.extractZero(1).getKind());
+        assertEquals(Kind.BVEXTRACT, bv.extract(5, 3).getKind());
+        assertEquals(Kind.FALSE, bv.ge(bv).implies(bv.lt(bv)).getKind());
+    }
 }

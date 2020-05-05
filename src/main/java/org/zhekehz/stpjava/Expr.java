@@ -12,10 +12,6 @@ public abstract class Expr {
 
     public abstract Expr fromRef(long ref);
 
-    public final QueryResult query() {
-        return QueryResult.fromInt(Native.vc_query(vc.getRef(), exprRef));
-    }
-
     public Expr simplify() {
         return this.fromRef(Native.vc_simplify(vc.getRef(), exprRef));
     }
@@ -38,6 +34,10 @@ public abstract class Expr {
 
     public void destroy() {
         Native.vc_DeleteExpr(exprRef);
+    }
+
+    public Kind getKind() {
+        return Kind.fromInt(Native.getExprKind(exprRef));
     }
 
     @Override

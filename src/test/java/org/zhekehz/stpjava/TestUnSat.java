@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 
 import static org.junit.Assert.*;
 import static org.zhekehz.stpjava.QueryResult.INVALID;
+import static org.zhekehz.stpjava.QueryResult.TIMEOUT;
 
 public class TestUnSat extends TestBase {
 
@@ -88,4 +89,23 @@ public class TestUnSat extends TestBase {
         assertTrue(expr.getCounterExample().toBoolean());
     }
 
+    @Test
+    public void test5() {
+        vc.useCryptominisat();
+        assertTrue(vc.isUsingCryptominisat());
+
+        MemoryArrayExpr array = new MemoryArrayExpr(vc, "arr");
+
+        BitVectorExpr bv1 = new BitVectorExpr(vc, "bv1", 8);
+        BitVectorExpr bv2 = new BitVectorExpr(vc, "bv2", 8);
+
+        for (int i = 0; i < 10000; ++i) {
+            BitVectorExpr idx = BitVectorExpr.fromInt(vc, 32, i);
+            bv1.ge(array.read(idx)).assertFormula();
+            bv2.le(array.read(idx)).assertFormula();
+        }
+
+        BoolExpr q = bv1.ge(bv2);
+        assertEquals(TIMEOUT, q.queryWithTimeout(1, 1));
+    }
 }

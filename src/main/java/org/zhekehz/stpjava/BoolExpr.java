@@ -90,6 +90,18 @@ public class BoolExpr extends Expr {
         return new BoolExpr(vc, Native.vc_getCounterExample(vc.getRef(), exprRef));
     }
 
+    public final QueryResult queryWithTimeout(int timeoutMaxConflicts, int timeoutMaxTime) {
+        if (!vc.isUsingCryptominisat()) {
+            throw new IllegalStateException("Only the cryptominisat solver supports timeoutMaxTime");
+        }
+        return QueryResult.fromInt(
+                Native.vc_query_with_timeout(vc.getRef(), exprRef, timeoutMaxConflicts, timeoutMaxTime));
+    }
+
+    public final QueryResult query() {
+        return QueryResult.fromInt(Native.vc_query(vc.getRef(), exprRef));
+    }
+
     @Override
     public BoolExpr fromRef(long ref) {
         return new BoolExpr(vc, ref);

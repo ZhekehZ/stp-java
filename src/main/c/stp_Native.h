@@ -201,6 +201,14 @@ JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1simplify
 
 /*
  * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_query_with_timeout
+ * Signature: (JJII)I
+ */
+JNIEXPORT jint JNICALL Java_org_zhekehz_stpjava_Native_vc_1query_1with_1timeout
+  (JNIEnv *, jclass, jlong, jlong, jint, jint);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
  * Method:    vc_query
  * Signature: (JJ)I
  */
@@ -529,6 +537,22 @@ JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvCreateMemoryArray
 
 /*
  * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvReadMemoryArray
+ * Signature: (JJJI)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvReadMemoryArray
+  (JNIEnv *, jclass, jlong, jlong, jlong, jint);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_bvWriteToMemoryArray
+ * Signature: (JJJJI)J
+ */
+JNIEXPORT jlong JNICALL Java_org_zhekehz_stpjava_Native_vc_1bvWriteToMemoryArray
+  (JNIEnv *, jclass, jlong, jlong, jlong, jlong, jint);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
  * Method:    vc_Destroy
  * Signature: (J)V
  */
@@ -557,6 +581,38 @@ JNIEXPORT jint JNICALL Java_org_zhekehz_stpjava_Native_vc_1isBool
  * Signature: (J)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_org_zhekehz_stpjava_Native_exprString
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    getExprKind
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_org_zhekehz_stpjava_Native_getExprKind
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_supportsCryptominisat
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_org_zhekehz_stpjava_Native_vc_1supportsCryptominisat
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_useCryptominisat
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_org_zhekehz_stpjava_Native_vc_1useCryptominisat
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_isUsingCryptominisat
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_org_zhekehz_stpjava_Native_vc_1isUsingCryptominisat
   (JNIEnv *, jclass, jlong);
 
 /*

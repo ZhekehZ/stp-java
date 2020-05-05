@@ -33,6 +33,17 @@ public class ValidityChecker {
         Native.vc_printCounterExample(ref);
     }
 
+    public void useCryptominisat() {
+        if (!Native.vc_supportsCryptominisat(ref)) {
+            throw new IllegalStateException("Cryptominisat is not supported");
+        }
+        Native.vc_useCryptominisat(ref);
+    }
+
+    public boolean isUsingCryptominisat() {
+        return Native.vc_isUsingCryptominisat(ref);
+    }
+
     @Override
     public int hashCode() {
         return Long.hashCode(ref);
