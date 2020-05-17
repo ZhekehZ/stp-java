@@ -108,4 +108,39 @@ public class TestUnSat extends TestBase {
         BoolExpr q = bv1.ge(bv2);
         assertEquals(TIMEOUT, q.queryWithTimeout(1, 1));
     }
+
+    @Test
+    public void test6() {
+        FunctionExpr function = new FunctionExpr(vc, "func", 2, 4, 16);
+        BitVectorExpr arg1 = BitVectorExpr.fromInt(vc, 4, 7);
+        BitVectorExpr arg2 = new BitVectorExpr(vc, "arg2", 4);
+
+        long expected = 42;
+
+        assertEquals(INVALID,
+                function.apply(arg1, arg2)
+                        .equiv(BitVectorExpr.fromLong(vc, 16, expected))
+                        .not().query());
+
+        FunctionExpr.CounterExampleFunction functionCE = function.getCounterExampleFunction();
+        long arg2CE = arg2.getCounterExample().toLong();
+
+        assertEquals(expected, (long) functionCE.apply(7, arg2CE));
+    }
+
+    @Test
+    public void test7() {
+        FunctionExpr function = new FunctionExpr(vc, "func", new int[]{16, 29, 32}, 64);
+        BitVectorExpr arg1 = BitVectorExpr.fromInt(vc, 16, 17);
+        BitVectorExpr arg2 = BitVectorExpr.fromInt(vc, 29, 19);
+        BitVectorExpr arg3 = BitVectorExpr.fromInt(vc, 32, 19);
+
+        long expected = 12345;
+        assertEquals(INVALID,
+                function.apply(arg1, arg2, arg3)
+                        .equiv(BitVectorExpr.fromLong(vc, 64, expected))
+                        .not().query());
+        FunctionExpr.CounterExampleFunction functionCE = function.getCounterExampleFunction();
+        assertEquals(expected, (long) functionCE.apply(arg1.toLong(), arg2.toLong(), arg3.toLong()));
+    }
 }

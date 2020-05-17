@@ -70,6 +70,16 @@ public class ArrayExpr extends Expr {
         return result;
     }
 
+    public HashMap<String, Long> getCounterExampleStringLong() {
+        long[] ce = Native.vc_getCounterExampleArray(vc.getRef(), exprRef);
+        HashMap<String, Long> result = new HashMap<>();
+        int size = ce.length / 2;
+        for (int i = 0; i < size; ++i) {
+            result.put(Native.exprString(ce[i]), Native.getBVUnsignedLong(ce[size + i]));
+        }
+        return result;
+    }
+
     @Override
     public int hashCode() {
         return (Integer.hashCode(indexWidth) * 31 + Integer.hashCode(elementWidth)) * 13 + super.hashCode();
