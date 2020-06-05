@@ -67,14 +67,21 @@ public class TestConst extends TestBase {
 
     @Test
     public void test6() {
-        BitVectorExpr bv = new BitVectorExpr(vc, "123", 123);
+        BitVectorExpr bv1 = new BitVectorExpr(vc, "123", 123);
+        BitVectorExpr bv2 = BitVectorExpr.fromInt(vc, 123, 1);
 
-        assertEquals(Kind.BVCONST, BitVectorExpr.fromInt(vc, 12, 123).getKind());
-        assertEquals(Kind.SYMBOL, bv.getKind());
-        assertEquals(Kind.BVPLUS, bv.plus(BitVectorExpr.fromInt(vc, 123, 1)).getKind());
-        assertEquals(Kind.BVXOR, bv.xor(BitVectorExpr.fromInt(vc, 123, 123)).getKind());
-        assertEquals(Kind.EQ, bv.extractZero(1).getKind());
-        assertEquals(Kind.BVEXTRACT, bv.extract(5, 3).getKind());
-        assertEquals(Kind.FALSE, bv.ge(bv).implies(bv.lt(bv)).getKind());
+        assertEquals(bv1.getSort(), bv2.getSort());
+        assertEquals(bv1.asBool().getSort(), BoolExpr.getFalse(vc).getSort());
+        assertEquals(bv1.extractZero(1).getSort(), BoolExpr.getFalse(vc).getSort());
+    }
+
+    @Test
+    public void test7() {
+        int testNum = 1876;
+
+        BitVectorExpr bv1 = BitVectorExpr.fromInt(vc, 11, testNum);
+        BitVectorExpr bv2 = BitVectorExpr.fromInt(vc, 17, testNum);
+
+        assertTrue(bv1.zeroExtend(17).equiv(bv2).toBoolean());
     }
 }

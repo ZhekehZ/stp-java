@@ -14,11 +14,11 @@ public class BitVectorExpr extends Expr {
         this.width = width;
     }
 
-    static BitVectorExpr fromInt(ValidityChecker vc, int width, int value) {
+    public static BitVectorExpr fromInt(ValidityChecker vc, int width, int value) {
         return new BitVectorExpr(vc, width, Native.vc_bvConstExprFromInt(vc.getRef(), width, value));
     }
 
-    static BitVectorExpr fromLong(ValidityChecker vc, int width, long value) {
+    public static BitVectorExpr fromLong(ValidityChecker vc, int width, long value) {
         return new BitVectorExpr(vc, width, Native.vc_bvConstExprFromLL(vc.getRef(), width, value));
     }
 
@@ -51,12 +51,7 @@ public class BitVectorExpr extends Expr {
         return Native.getBVUnsignedLong(exprRef);
     }
 
-    BoolExpr equiv(BitVectorExpr other) {
-        checkWidth(other);
-        return new BoolExpr(vc, Native.vc_eqExpr(vc.getRef(), exprRef, other.exprRef));
-    }
-
-    BitVectorExpr plus(BitVectorExpr other) {
+    public BitVectorExpr plus(BitVectorExpr other) {
         checkWidth(other);
         return new BitVectorExpr(vc, width, Native.vc_bvPlusExpr(vc.getRef(), width, exprRef, other.exprRef));
     }
@@ -206,6 +201,13 @@ public class BitVectorExpr extends Expr {
         return new BitVectorExpr(vc, newWidth, Native.vc_bvSignExtend(vc.getRef(), exprRef, newWidth));
     }
 
+    public BitVectorExpr zeroExtend(int newWidth) {
+        if (newWidth <= width) {
+            throw new IllegalArgumentException("newWidth must be > width");
+        }
+        return BitVectorExpr.fromInt(vc, newWidth - width, 0).concat(this);
+    }
+
     public BitVectorExpr getCounterExample() {
         return new BitVectorExpr(vc, width, Native.vc_getCounterExample(vc.getRef(), exprRef));
     }
@@ -241,5 +243,20 @@ public class BitVectorExpr extends Expr {
     @Override
     public boolean equals(Object o) {
         return super.equals(o);
+    }
+
+    @Override
+    public Sort getSort() {
+        return new BitVectorSort(width);
+    }
+
+    @Override
+    public BitVectorExpr asBitVector() {
+        return this;
+    }
+
+    @Override
+    public BoolExpr asBool() {
+        return this.equiv(BitVectorExpr.fromInt(vc, width, 0)).not();
     }
 }

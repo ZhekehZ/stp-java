@@ -122,4 +122,18 @@ public class BoolExpr extends Expr {
         return super.equals(o);
     }
 
+    @Override
+    public Sort getSort() {
+        return new BoolSort();
+    }
+
+    @Override
+    public BoolExpr asBool() {
+        return this;
+    }
+
+    @Override
+    public BitVectorExpr asBitVector() {
+        return toBitVector();
+    }
 }

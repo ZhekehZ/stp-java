@@ -1,5 +1,7 @@
 package org.zhekehz.stpjava;
 
+import jdk.nashorn.internal.runtime.BitVector;
+
 public abstract class Expr {
 
     protected final ValidityChecker vc;
@@ -8,6 +10,13 @@ public abstract class Expr {
     protected Expr(ValidityChecker vc, long exprRef) {
         this.exprRef = exprRef;
         this.vc = vc;
+    }
+
+    public BoolExpr equiv(Expr other) {
+        if (!other.getSort().equals(getSort())) {
+            throw new IllegalArgumentException("Expressions must have the same type");
+        }
+        return new BoolExpr(vc, Native.vc_eqExpr(vc.getRef(), exprRef, other.exprRef));
     }
 
     public abstract Expr fromRef(long ref);
@@ -36,9 +45,9 @@ public abstract class Expr {
         Native.vc_DeleteExpr(exprRef);
     }
 
-    public Kind getKind() {
-        return Kind.fromInt(Native.getExprKind(exprRef));
-    }
+//    public Sort getKind() {
+//        return Sort.fromInt(Native.getExprKind(exprRef));
+//    }
 
     @Override
     public String toString() {
@@ -55,5 +64,19 @@ public abstract class Expr {
         if (o == this) return true;
         if (!(o instanceof Expr)) return false;
         return sameTypeWith((Expr) o) && vc.equals(((Expr) o).vc) && exprRef == ((Expr) o).exprRef;
+    }
+
+    public abstract Sort getSort();
+
+    public BitVectorExpr asBitVector() {
+        throw new IllegalStateException("Is not a BitVector");
+    }
+
+    public BoolExpr asBool() {
+        throw new IllegalStateException("Is not a Bool");
+    }
+
+    public ArrayExpr asArray() {
+        throw new IllegalStateException("Is not an Array");
     }
 }

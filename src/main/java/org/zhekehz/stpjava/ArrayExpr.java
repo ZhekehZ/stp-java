@@ -22,14 +22,14 @@ public class ArrayExpr extends Expr {
         this.elementWidth = elementWidth;
     }
 
-    BitVectorExpr read(BitVectorExpr index) {
+    public BitVectorExpr read(BitVectorExpr index) {
         if (index.getWidth() != indexWidth) {
             throw new IllegalArgumentException("argument has invalid bit-width");
         }
         return new BitVectorExpr(vc, elementWidth, Native.vc_readExpr(vc.getRef(), exprRef, index.exprRef));
     }
 
-    ArrayExpr write(BitVectorExpr index, BitVectorExpr expr) {
+    public ArrayExpr write(BitVectorExpr index, BitVectorExpr expr) {
         if (expr.getWidth() != elementWidth || index.getWidth() != indexWidth) {
             throw new IllegalArgumentException("argument has invalid bit-width");
         }
@@ -88,5 +88,15 @@ public class ArrayExpr extends Expr {
     @Override
     public boolean equals(Object o) {
         return super.equals(o);
+    }
+
+    @Override
+    public Sort getSort() {
+        return new ArraySort(indexWidth, elementWidth);
+    }
+
+    @Override
+    public ArrayExpr asArray() {
+        return this;
     }
 }

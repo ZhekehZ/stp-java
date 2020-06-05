@@ -47,12 +47,12 @@ public class FunctionExpr extends ArrayExpr {
     }
 
     @Override
-    BitVectorExpr read(BitVectorExpr index) {
+    public BitVectorExpr read(BitVectorExpr index) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    ArrayExpr write(BitVectorExpr index, BitVectorExpr expr) {
+    public ArrayExpr write(BitVectorExpr index, BitVectorExpr expr) {
         throw new UnsupportedOperationException();
     }
 
@@ -101,5 +101,10 @@ public class FunctionExpr extends ArrayExpr {
             final BitVectorExpr bvConst = bv;
             return data.get(bv.toString());
         }
+    }
+
+    @Override
+    public Sort getSort() {
+        return new FunctionSort(argWidth, resultWidth);
     }
 }

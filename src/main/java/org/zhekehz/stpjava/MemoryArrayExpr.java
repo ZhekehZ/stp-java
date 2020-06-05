@@ -10,7 +10,7 @@ public class MemoryArrayExpr extends ArrayExpr {
         super(vc, 32, 8, ref);
     }
 
-    BitVectorExpr read(BitVectorExpr index, int numberOfBytes) {
+    public BitVectorExpr read(BitVectorExpr index, int numberOfBytes) {
         if (index.getWidth() != indexWidth) {
             throw new IllegalArgumentException("argument has invalid bit-width");
         }
@@ -19,7 +19,7 @@ public class MemoryArrayExpr extends ArrayExpr {
     }
 
     @Override
-    MemoryArrayExpr write(BitVectorExpr index, BitVectorExpr expr) {
+    public MemoryArrayExpr write(BitVectorExpr index, BitVectorExpr expr) {
         if (index.getWidth() != indexWidth) {
             throw new IllegalArgumentException("argument has invalid bit-width");
         }
