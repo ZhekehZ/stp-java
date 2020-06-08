@@ -10,7 +10,7 @@ import static org.zhekehz.stpjava.QueryResult.VALID;
 public class TestSat extends TestBase {
 
     @Test
-    public void test1() {
+    public void testBVBasicEq() {
         BitVectorExpr a = new BitVectorExpr(vc, "a", 32);
         BitVectorExpr b = new BitVectorExpr(vc, "b", 32);
 
@@ -18,7 +18,7 @@ public class TestSat extends TestBase {
     }
 
     @Test
-    public void test2() {
+    public void testBVBasicCompare() {
         BitVectorExpr a = new BitVectorExpr(vc, "a", 32);
 
         BoolExpr p1 = a.gt(BitVectorExpr.fromInt(vc, 32, 17));
@@ -30,7 +30,7 @@ public class TestSat extends TestBase {
     }
 
     @Test
-    public void test3() {
+    public void testImplication() {
         BitVectorExpr a = new BitVectorExpr(vc, "a", 32);
 
         BitVectorExpr c = BitVectorExpr.fromLong(vc, 32, 1234);
@@ -43,4 +43,9 @@ public class TestSat extends TestBase {
         assertEquals(VALID, PQ.apply(a).implies(Q.apply(a)).query());
     }
 
+    @Test
+    public void testBoolVariable() {
+        BoolExpr b = new BoolExpr(vc, "b");
+        assertEquals(VALID, b.equiv(BoolExpr.getTrue(vc)).or(b.not()).query());
+    }
 }

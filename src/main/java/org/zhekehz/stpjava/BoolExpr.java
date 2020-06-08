@@ -2,7 +2,9 @@ package org.zhekehz.stpjava;
 
 public class BoolExpr extends Expr {
 
-    // Boolean variables are not supported
+    public BoolExpr(ValidityChecker vc, String name) {
+        super(vc, Native.vc_varExpr(vc.getRef(), name, Native.vc_boolType(vc.getRef())));
+    }
 
     public BoolExpr(ValidityChecker vc, long ref) {
         super(vc, ref);
@@ -135,5 +137,11 @@ public class BoolExpr extends Expr {
     @Override
     public BitVectorExpr asBitVector() {
         return toBitVector();
+    }
+
+    @Override
+    public BoolExpr equiv(Expr other) {
+        if (!(other instanceof BoolExpr)) return BoolExpr.getFalse(vc);
+        return iff((BoolExpr) other);
     }
 }

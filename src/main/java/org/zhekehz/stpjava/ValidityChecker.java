@@ -1,10 +1,17 @@
 package org.zhekehz.stpjava;
 
+import java.io.IOException;
+
 public class ValidityChecker {
 
     static {
-        System.loadLibrary("stpnative");
-        System.loadLibrary("stp");
+        try {
+            NativeUtils.loadLibrary("stpnative");
+            NativeUtils.loadLibrary("stp");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IllegalStateException("Unable to load dynamic libraries");
+        }
     }
 
     private final long ref;

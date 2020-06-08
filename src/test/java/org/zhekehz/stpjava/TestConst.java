@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 public class TestConst extends TestBase {
 
     @Test
-    public void test1() {
+    public void testBVPlusExtract() {
         BitVectorExpr test = BitVectorExpr.fromInt(vc, 32, 144)
                 .plus(BitVectorExpr.fromInt(vc, 32, 112))
                 .extract(31, 8);
@@ -17,7 +17,7 @@ public class TestConst extends TestBase {
     }
 
     @Test
-    public void test2() {
+    public void testBVConcatShift() {
         BitVectorExpr test = BitVectorExpr.fromInt(vc, 4, 15)
                 .concat(BitVectorExpr.fromInt(vc, 4, 15))
                 .leftShift(BitVectorExpr.fromInt(vc, 4, 4), 9)
@@ -27,7 +27,7 @@ public class TestConst extends TestBase {
     }
 
     @Test
-    public void test3() {
+    public void testBVShiftExtend() {
         BitVectorExpr ff = BitVectorExpr.fromInt(vc, 4, 0b1111);
         BitVectorExpr i3 = BitVectorExpr.fromInt(vc, 4, 3);
         BitVectorExpr one = BitVectorExpr.fromInt(vc, 4, 1);
@@ -43,12 +43,12 @@ public class TestConst extends TestBase {
     }
 
     @Test
-    public void test4() {
+    public void testBVExtractOnt() {
         assertTrue(BoolExpr.getTrue(vc).toBitVector().extractOne(0).toBoolean());
     }
 
     @Test
-    public void test5() {
+    public void testMemArray() {
         MemoryArrayExpr array = new MemoryArrayExpr(vc, "mem_array");
 
         BitVectorExpr idx1 = BitVectorExpr.fromInt(vc, 32, 0);
@@ -66,7 +66,7 @@ public class TestConst extends TestBase {
     }
 
     @Test
-    public void test6() {
+    public void testSort() {
         BitVectorExpr bv1 = new BitVectorExpr(vc, "123", 123);
         BitVectorExpr bv2 = BitVectorExpr.fromInt(vc, 123, 1);
 
@@ -76,12 +76,27 @@ public class TestConst extends TestBase {
     }
 
     @Test
-    public void test7() {
+    public void testBVZeroExtend() {
         int testNum = 1876;
 
         BitVectorExpr bv1 = BitVectorExpr.fromInt(vc, 11, testNum);
         BitVectorExpr bv2 = BitVectorExpr.fromInt(vc, 17, testNum);
 
         assertTrue(bv1.zeroExtend(17).equiv(bv2).toBoolean());
+    }
+
+    @Test
+    public void testBoolBasicCompare() {
+        BoolExpr f = BoolExpr.getFalse(vc);
+        BoolExpr t = BoolExpr.getTrue(vc);
+
+        assertEquals(QueryResult.VALID, f.equiv(t).not().query());
+    }
+
+    @Test
+    public void testConstArray() {
+        ConstArrayExpr arrayExpr = new ConstArrayExpr(vc, 123, BitVectorExpr.fromInt(vc, 16, 444));
+
+        assertEquals(444, arrayExpr.read(BitVectorExpr.fromInt(vc, 123, 33)).toInt());
     }
 }

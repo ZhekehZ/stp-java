@@ -14,7 +14,7 @@ import static org.zhekehz.stpjava.QueryResult.TIMEOUT;
 public class TestUnSat extends TestBase {
 
     @Test
-    public void test1() {
+    public void testBVBasicArithmetic() {
         BitVectorExpr c = new BitVectorExpr(vc, "c", 32);
         BitVectorExpr a = BitVectorExpr.fromInt(vc, 32, 5);
         BitVectorExpr b = BitVectorExpr.fromInt(vc, 32, 6);
@@ -27,7 +27,7 @@ public class TestUnSat extends TestBase {
     }
 
     @Test
-    public void test2() {
+    public void testBVBasicLogic() {
         BitVectorExpr a = new BitVectorExpr(vc, "a", 8);
         BitVectorExpr b = new BitVectorExpr(vc, "b", 8);
         BitVectorExpr c = BitVectorExpr.fromInt(vc, 8, 5);
@@ -40,7 +40,7 @@ public class TestUnSat extends TestBase {
     }
 
     @Test
-    public void arraysTest() {
+    public void testArray() {
         ArrayExpr array = new ArrayExpr(vc, "AII", 4, 13);
         BitVectorExpr i = BitVectorExpr.fromInt(vc, 4, 14);
         BitVectorExpr v = new BitVectorExpr(vc, "v", 13);
@@ -59,7 +59,7 @@ public class TestUnSat extends TestBase {
     }
 
     @Test
-    public void test3() {
+    public void testAssert() {
         BitVectorExpr bv = new BitVectorExpr(vc, "bv", 30);
         BitVectorExpr subBv = bv.extract(4, 1);
 
@@ -77,7 +77,7 @@ public class TestUnSat extends TestBase {
     }
 
     @Test
-    public void test4() {
+    public void testMemoryArray() {
         MemoryArrayExpr array = new MemoryArrayExpr(vc, "arr");
         BitVectorExpr idx = BitVectorExpr.fromInt(vc, 32, 8);
 
@@ -90,7 +90,7 @@ public class TestUnSat extends TestBase {
     }
 
     @Test
-    public void test5() {
+    public void testTimeout() {
         vc.useCryptominisat();
         assertTrue(vc.isUsingCryptominisat());
 
@@ -110,7 +110,7 @@ public class TestUnSat extends TestBase {
     }
 
     @Test
-    public void test6() {
+    public void testFunctionVar1() {
         FunctionExpr function = new FunctionExpr(vc, "func", 2, 4, 16);
         BitVectorExpr arg1 = BitVectorExpr.fromInt(vc, 4, 7);
         BitVectorExpr arg2 = new BitVectorExpr(vc, "arg2", 4);
@@ -129,7 +129,7 @@ public class TestUnSat extends TestBase {
     }
 
     @Test
-    public void test7() {
+    public void testFunctionVar2() {
         FunctionExpr function = new FunctionExpr(vc, "func", new int[]{16, 29, 32}, 64);
         BitVectorExpr arg1 = BitVectorExpr.fromInt(vc, 16, 17);
         BitVectorExpr arg2 = BitVectorExpr.fromInt(vc, 29, 19);
@@ -142,5 +142,20 @@ public class TestUnSat extends TestBase {
                         .not().query());
         FunctionExpr.CounterExampleFunction functionCE = function.getCounterExampleFunction();
         assertEquals(expected, (long) functionCE.apply(arg1.toLong(), arg2.toLong(), arg3.toLong()));
+    }
+
+    @Test
+    public void testSimpleLogic() {
+        BitVectorExpr a = new BitVectorExpr(vc, "a", 32);
+        BitVectorExpr b = new BitVectorExpr(vc, "b", 32);
+        BitVectorExpr c = new BitVectorExpr(vc, "c", 32);
+
+        BitVectorExpr zero = BitVectorExpr.fromInt(vc, 32, 0);
+        BitVectorExpr one = BitVectorExpr.fromInt(vc, 32, 1);
+
+        BoolExpr query = c.equiv(zero).not();
+        BoolExpr state = c.equiv(a.gt(b).ifThenElse(zero, one));
+
+        assertEquals(INVALID, query.and(state).not().query());
     }
 }
