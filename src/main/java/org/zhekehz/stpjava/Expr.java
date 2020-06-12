@@ -45,7 +45,7 @@ public abstract class Expr {
         Native.vc_DeleteExpr(exprRef);
     }
 
-    public String toSMT2Lib2() {
+    public String toSMTLib2() {
         return Native.vc_printSMTLIB(vc.getRef(), exprRef);
     }
 

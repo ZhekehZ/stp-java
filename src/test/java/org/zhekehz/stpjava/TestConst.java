@@ -2,8 +2,6 @@ package org.zhekehz.stpjava;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -107,7 +105,7 @@ public class TestConst extends TestBase {
         BitVectorExpr bv1 = BitVectorExpr.fromInt(vc, 17, 44);
         BitVectorExpr bv2 = BitVectorExpr.fromInt(vc, 17, 33);
 
-        String res = bv1.plus(bv2).or(bv1.minus(bv2)).toSMT2Lib2();
+        String res = bv1.plus(bv2).or(bv1.minus(bv2)).toSMTLib2();
         System.out.println(res);
     }
 }
