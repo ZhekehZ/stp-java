@@ -45,9 +45,9 @@ public abstract class Expr {
         Native.vc_DeleteExpr(exprRef);
     }
 
-//    public Sort getKind() {
-//        return Sort.fromInt(Native.getExprKind(exprRef));
-//    }
+    public String toSMT2Lib2() {
+        return Native.vc_printSMTLIB(vc.getRef(), exprRef);
+    }
 
     @Override
     public String toString() {

@@ -308,6 +308,14 @@ NEW_FUN_1(vc_1useCryptominisat, vc_useCryptominisat, jlong, VC, jboolean)
 
 NEW_FUN_1(vc_1isUsingCryptominisat, vc_isUsingCryptominisat, jlong, VC, jboolean)
 
+JNIEXPORT jstring JNICALL Java_org_zhekehz_stpjava_Native_vc_1printSMTLIB
+  (JNIEnv * env, jclass cls, jlong vc, jlong expr) {
+    char * buf = vc_printSMTLIB((VC) vc, (Expr) expr);
+    jstring res = (*env)->NewStringUTF(env, buf);
+    free(buf);
+    return res;
+}
+
 // \ GENERAL EXPRESSION OPERATIONS
 
 

@@ -2,6 +2,8 @@ package org.zhekehz.stpjava;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -98,5 +100,14 @@ public class TestConst extends TestBase {
         ConstArrayExpr arrayExpr = new ConstArrayExpr(vc, 123, BitVectorExpr.fromInt(vc, 16, 444));
 
         assertEquals(444, arrayExpr.read(BitVectorExpr.fromInt(vc, 123, 33)).toInt());
+    }
+
+    @Test
+    public void testSMTPrint() {
+        BitVectorExpr bv1 = BitVectorExpr.fromInt(vc, 17, 44);
+        BitVectorExpr bv2 = BitVectorExpr.fromInt(vc, 17, 33);
+
+        String res = bv1.plus(bv2).or(bv1.minus(bv2)).toSMT2Lib2();
+        System.out.println(res);
     }
 }

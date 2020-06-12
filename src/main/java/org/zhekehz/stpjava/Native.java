@@ -225,6 +225,8 @@ public final class Native {
 
     static native boolean vc_isUsingCryptominisat(long vc);
 
+    static native String vc_printSMTLIB(long vc, long expr);
+
     // \ GENERAL EXPRESSION OPERATIONS
 
 

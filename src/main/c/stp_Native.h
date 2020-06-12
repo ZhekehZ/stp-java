@@ -617,6 +617,14 @@ JNIEXPORT jboolean JNICALL Java_org_zhekehz_stpjava_Native_vc_1isUsingCryptomini
 
 /*
  * Class:     org_zhekehz_stpjava_Native
+ * Method:    vc_printSMTLIB
+ * Signature: (JJ)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_org_zhekehz_stpjava_Native_vc_1printSMTLIB
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     org_zhekehz_stpjava_Native
  * Method:    isConst
  * Signature: (J)Z
  */
