@@ -20,7 +20,7 @@ public class BoolExpr extends Expr {
 
     public static BoolExpr andAll(ValidityChecker vc, BoolExpr[] children) {
         if (children.length == 0) {
-            throw new IllegalArgumentException("Empty array");
+            return getTrue(vc);
         }
         long[] refs = new long[children.length];
         for (int i = 0; i < children.length; i++) {
@@ -31,7 +31,7 @@ public class BoolExpr extends Expr {
 
     public static BoolExpr orAll(ValidityChecker vc, BoolExpr[] children) {
         if (children.length == 0) {
-            throw new IllegalArgumentException("Empty array");
+            return getFalse(vc);
         }
         long[] refs = new long[children.length];
         for (int i = 0; i < children.length; i++) {
