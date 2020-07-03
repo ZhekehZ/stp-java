@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group 'org.zhekehz.stpjava'
+version '2.3'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(Test) {
+    exec { commandLine "./build.sh" }
+    systemProperty "java.library.path", "src/main/resources/"
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
